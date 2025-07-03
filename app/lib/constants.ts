@@ -2,7 +2,7 @@ export const isProduction = process.env.NODE_ENV === 'production'
 
 export const SITE_URL = isProduction ? 'https://nelsonlai.me' : 'http://localhost:3000'
 
-export const GITHUB_USERNAME = 'tszhong0411'
+export const GITHUB_USERNAME = 'me-safwan-07'
 
 export const SITE_NAME = 'Nelson Lai'
 export const SITE_KEYWORDS = ['tszhong0411', 'Next.js', 'React', 'TypeScript', 'Node.js']

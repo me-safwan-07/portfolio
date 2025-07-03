@@ -120,14 +120,14 @@ const Hero = () => {
               React
             </motion.div>
           </h1>
-          <motion.div
+          {/* <motion.div
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ ease: 'easeOut' }}
             className='text-muted-foreground text-sm'
           >
             Hong Kong • UTC/GMT +8
-          </motion.div>
+          </motion.div> */}
         </div>
         <motion.div
           className='relative hidden size-28 md:block'

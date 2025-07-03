@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-// import Footer from './layout/footer'
+import Footer from './layout/footer'
 // import Header from './layout/header'
 
 type MainLayoutProps = {
@@ -16,7 +16,7 @@ const MainLayout = (props: MainLayoutProps) => {
       <main id='skip-nav' className='mx-auto mb-16 w-full max-w-5xl flex-1 px-4 py-24 sm:px-8'>
         {children}
       </main>
-      {/* <Footer /> */}
+      <Footer />
       <Image
         width={1512}
         height={550}

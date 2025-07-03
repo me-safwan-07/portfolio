@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/packages/utils/cn";
+import Providers from "./providers";
 
 const fontSans = Geist({
   subsets: ['latin'],
@@ -33,8 +34,9 @@ export default function RootLayout({
       <body
         className={`relative flex min-h-screen flex-col`}
       >
-        
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

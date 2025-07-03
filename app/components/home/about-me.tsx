@@ -1,7 +1,6 @@
 'use client'
 
-import { useTranslations } from '@tszhong0411/i18n/client'
-import { buttonVariants } from '@tszhong0411/ui'
+import { buttonVariants } from '@/packages/ui'
 
 import { motion, useInView } from 'motion/react'
 import { useRef } from 'react'
@@ -29,7 +28,6 @@ const variants = {
 const AboutMe = () => {
   const cardsRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(cardsRef, { once: true, margin: '-100px' })
-  const t = useTranslations()
 
   return (
     <motion.div
@@ -56,7 +54,7 @@ const AboutMe = () => {
           duration: 0.3
         }}
       >
-        {t('homepage.about-me.title')}
+        About Me
       </motion.h2>
       <motion.div
         className='mt-12 grid gap-4 md:grid-cols-2'
@@ -86,7 +84,7 @@ const AboutMe = () => {
       </motion.div>
       <div className='my-8 flex items-center justify-center'>
         <Link href='/about' className={cn(buttonVariants({ variant: 'outline' }), 'rounded-xl')}>
-          {t('homepage.about-me.more')}
+          Know more about me
         </Link>
       </div>
     </motion.div>

@@ -1,16 +1,14 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { useTranslations } from '@tszhong0411/i18n/client'
 
-import { useTRPC } from '@/trpc/client'
+import { useTRPC } from '@/packages/trpc/client'
+import Link from 'next/link'
 
-import Link from '../link'
 
 const NowPlaying = () => {
   const trpc = useTRPC()
   const { status, data } = useQuery(trpc.spotify.get.queryOptions())
-  const t = useTranslations()
 
   const isPlaying = status === 'success' && data.isPlaying && data.songUrl
   const notListening = status === 'success' && (!data.isPlaying || !data.songUrl)
@@ -32,14 +30,14 @@ const NowPlaying = () => {
 
       <div className='inline-flex w-full items-center justify-center gap-1 text-sm md:justify-start'>
         <p>
-          {status === 'pending' && t('layout.now-playing.loading')}
-          {status === 'error' && t('layout.now-playing.error')}
+          {status === 'pending' && "Loading ..."}
+          {status === 'error' && "Failed to fetch Spotify data"}
           {isPlaying && (
             <Link href={data.songUrl}>
               {data.name} - {data.artist}
             </Link>
           )}
-          {notListening && t('layout.now-playing.not-listening')}
+          {notListening && "Not Listening - Spotify"}
         </p>
       </div>
     </div>
