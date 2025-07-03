@@ -10,3 +10,6 @@ export * from "./logo";
 export * from "./scroll-area";
 export * from "./tree-view";
 export * from "./kbd";
+export * from "./marquee";
+export * from "./tooltip";
+export * from "./link";
