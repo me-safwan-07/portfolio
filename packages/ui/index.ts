@@ -21,3 +21,5 @@ export * from "./segment-group";
 export * from './textarea';
 export * from './alert';
 export * from './alert-dialog';
+export * from './badge';
+export * from './skeleton'
