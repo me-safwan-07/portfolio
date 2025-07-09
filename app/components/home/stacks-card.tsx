@@ -2,6 +2,7 @@
 
 import {
   SiCloudflare,
+  SiCloudinary,
   SiCss,
   SiDrizzle,
   SiFigma,
@@ -10,15 +11,18 @@ import {
   SiHtml5,
   SiJavascript,
   SiMarkdown,
+  SiMongodb,
   SiMysql,
   SiNextdotjs,
   SiNodedotjs,
   SiPostgresql,
+  SiPostman,
   SiPrisma,
   SiPython,
   SiRadixui,
   SiReact,
   SiReactquery,
+  SiRedis,
   SiTailwindcss,
   SiTypescript,
   SiVite,
@@ -40,13 +44,14 @@ const StacksCard = () => {
         <SiCss className='size-10' />
         <SiJavascript className='size-10' />
         <SiTypescript className='size-10' />
-        <SiFigma className='size-10' />
+        {/* <SiFigma className='size-10' /> */}
         <SiTailwindcss className='size-10' />
         <SiNextdotjs className='size-10' />
         <SiReact className='size-10' />
         <SiPython className='size-10' />
         <SiPostgresql className='size-10' />
         <SiRadixui className='size-10' />
+        <SiCloudinary className='size-10' />
       </Marquee>
       <Marquee gap='20px' className='py-4' reverse fade pauseOnHover>
         <SiPrisma className='size-10' />
@@ -55,11 +60,14 @@ const StacksCard = () => {
         <SiGit className='size-10' />
         <SiVite className='size-10' />
         <SiDrizzle className='size-10' />
-        <SiCloudflare className='size-10' />
+        {/* <SiCloudflare className='size-10' /> */}
         <SiMarkdown className='size-10' />
         <SiVitest className='size-10' />
         <SiNodedotjs className='size-10' />
         <SiReactquery className='size-10' />
+        <SiMongodb className='size-10' />
+        <SiRedis className='size-10'/>
+        <SiPostman className='size-10' />
       </Marquee>
     </div>
   )

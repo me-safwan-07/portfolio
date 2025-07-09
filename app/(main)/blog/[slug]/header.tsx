@@ -3,15 +3,13 @@
 import NumberFlow from '@number-flow/react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
-
-
-
 import { usePostStore } from '@/app/stores/post'
 import ImageZoom from '@/app/components/image-zoom'
 import Link from 'next/link'
 import { BlurImage } from '@/app/components/ui/blur-image'
 import { useFormattedDate } from '@/app/hooks/use-formatted-date'
 import { useTRPC } from '@/packages/trpc/client'
+import { useTRPCInvalidator } from '@/app/lib/trpc-invalidator'
 
 const Header = () => {
   const { date, title, slug } = usePostStore((state) => state.post)
@@ -19,25 +17,25 @@ const Header = () => {
   const trpc = useTRPC()
   const invalidator = useTRPCInvalidator()
 
-  const incrementMutation = useMutation(
-    trpc.views.increment.mutationOptions({
-      onSettled: async () => {
-        await invalidator.views.invalidateBySlug(slug)
-      }
-    })
-  )
+  // const incrementMutation = useMutation(
+  //   trpc.views.increment.mutationOptions({
+  //     onSettled: async () => {
+  //       await invalidator.views.invalidateBySlug(slug)
+  //     }
+  //   })
+  // )
 
-  const viewCountQuery = useQuery(trpc.views.get.queryOptions({ slug }))
-  const commentCountQuery = useQuery(trpc.comments.getTotalCommentCount.queryOptions({ slug }))
+  // const viewCountQuery = useQuery(trpc.views.get.queryOptions({ slug }))
+  // const commentCountQuery = useQuery(trpc.comments.getTotalCommentCount.queryOptions({ slug }))
 
   const incremented = useRef(false)
 
-  useEffect(() => {
-    if (!incremented.current) {
-      incrementMutation.mutate({ slug })
-      incremented.current = true
-    }
-  }, [incrementMutation, slug])
+  // useEffect(() => {
+  //   if (!incremented.current) {
+  //     incrementMutation.mutate({ slug })
+  //     incremented.current = true
+  //   }
+  // }, [incrementMutation, slug])
 
   return (
     <div className='space-y-16 py-16'>
@@ -47,7 +45,7 @@ const Header = () => {
         </h1>
         <div className='grid grid-cols-2 text-sm max-md:gap-4 md:grid-cols-4'>
           <div className='space-y-1 md:mx-auto'>
-            <div className='text-muted-foreground'>{t('blog.header.written-by')}</div>
+            <div className='text-muted-foreground'>Written by</div>
             <Link href='https://github.com/tszhong0411' className='flex items-center gap-2'>
               <BlurImage
                 src='/images/avatar.png'
@@ -63,22 +61,22 @@ const Header = () => {
             <div className='text-muted-foreground'>Published on</div>
             <div>{formattedDate}</div>
           </div>
-          <div className='space-y-1 md:mx-auto'>
+          {/* <div className='space-y-1 md:mx-auto'>
             <div className='text-muted-foreground'>Views</div>
             {viewCountQuery.status === 'pending' && '--'}
             {viewCountQuery.status === 'error' && "Error"}
             {viewCountQuery.status === 'success' && (
               <NumberFlow value={viewCountQuery.data.views} data-testid='view-count' />
             )}
-          </div>
-          <div className='space-y-1 md:mx-auto'>
+          </div> */}
+          {/* <div className='space-y-1 md:mx-auto'>
             <div className='text-muted-foreground'>Comments</div>
             {commentCountQuery.status === 'pending' && '--'}
             {commentCountQuery.status === 'error' && "Error"}
             {commentCountQuery.status === 'success' && (
               <NumberFlow value={commentCountQuery.data.comments} data-testid='comment-count' />
             )}
-          </div>
+          </div> */}
         </div>
       </div>
       <ImageZoom

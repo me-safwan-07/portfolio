@@ -142,10 +142,10 @@ const Hero = () => {
           }}
         >
           <BlurImage
-            src='/images/avatar.png'
+            src='/images/me.jpg'
             className='rounded-full'
-            width={112}
-            height={112}
+            width={150}
+            height={200}
             alt='Nelson Lai'
             lazy={false}
           />

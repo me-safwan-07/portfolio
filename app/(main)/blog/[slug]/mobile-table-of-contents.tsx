@@ -1,14 +1,13 @@
 'use client'
 
-import type { TOC } from '@tszhong0411/mdx-plugins'
+import type { TOC } from '@/packages/mdx-plugins'
 
-import { useTranslations } from '@tszhong0411/i18n/client'
-import { useRouter } from '@tszhong0411/i18n/routing'
-import { Button, Popover, PopoverContent, PopoverTrigger } from '@tszhong0411/ui'
+import { Button, Popover, PopoverContent, PopoverTrigger } from '@/packages/ui'
 import { AlignLeftIcon } from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import Link from '@/components/link'
 
 type MobileTableOfContentsProps = {
   toc: TOC[]
@@ -18,13 +17,12 @@ const MobileTableOfContents = (props: MobileTableOfContentsProps) => {
   const { toc } = props
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
-  const t = useTranslations()
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger className='gap-2' asChild>
         <Button variant='secondary' className='fixed bottom-2 right-2 z-50 lg:hidden'>
-          <AlignLeftIcon /> {t('blog.on-this-page')}
+          <AlignLeftIcon /> {"Like this post"}
         </Button>
       </PopoverTrigger>
       <PopoverContent align='end' side='top' className='px-0 py-2'>

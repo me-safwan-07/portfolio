@@ -27,9 +27,7 @@ type CardProps = {
 const SelectedProjects = () => {
   const projectsRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(projectsRef, { once: true, margin: '-100px' })
-  const filteredProjects = allProjects.filter(
-    (project) => project.selected
-  )
+  const filteredProjects = allProjects.slice(0, 2)
 
   return (
     <motion.div

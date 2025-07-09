@@ -1,10 +1,9 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
 import { flags } from '@/packages/env'
-import { ClockIcon } from 'lucide-react'
-
 import { useTRPC } from '@/packages/trpc/client'
+import { useQuery } from '@tanstack/react-query'
+import { ClockIcon } from 'lucide-react'
 
 const CodingHours = () => {
   const trpc = useTRPC()
@@ -21,7 +20,7 @@ const CodingHours = () => {
       </div>
       <div className='flex grow items-center justify-center text-4xl font-semibold'>
         {status === 'pending' && '--'}
-        {status === 'error' && 'Error'}
+        {status === 'error' && "Error"}
         {status === 'success' && Math.round(data.seconds / 60 / 60)} hrs
       </div>
     </div>

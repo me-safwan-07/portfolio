@@ -8,9 +8,6 @@ import { useTRPC } from '@/packages/trpc/client'
 import Link from 'next/link'
 import { BlurImage } from './ui/blur-image'
 
-
-
-
 type PostCardsProps = {
   posts: Post[]
 }

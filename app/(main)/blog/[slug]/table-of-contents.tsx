@@ -1,12 +1,11 @@
 'use client'
 
-import type { TOC } from '@tszhong0411/mdx-plugins'
+import { useScrollspy } from '@/app/hooks/use-scrollspy'
+import type { TOC } from '@/packages/mdx-plugins'
 
-import { useTranslations } from '@tszhong0411/i18n/client'
-import { useRouter } from '@tszhong0411/i18n/routing'
-import { SegmentGroup, SegmentGroupItem } from '@tszhong0411/ui'
+import { SegmentGroup, SegmentGroupItem } from '@/packages/ui'
+import { useRouter } from 'next/navigation'
 
-import { useScrollspy } from '@/hooks/use-scrollspy'
 
 type TableOfContentsProps = {
   toc: TOC[]
@@ -18,12 +17,11 @@ const TableOfContents = (props: TableOfContentsProps) => {
     toc.map((item) => item.url),
     { rootMargin: '0% 0% -80% 0%' }
   )
-  const t = useTranslations()
   const router = useRouter()
 
   return (
     <div className='hidden pl-4 lg:block'>
-      <div className='mb-4'>{t('blog.on-this-page')}</div>
+      <div className='mb-4'>On this page</div>
       <SegmentGroup
         orientation='vertical'
         value={activeId}

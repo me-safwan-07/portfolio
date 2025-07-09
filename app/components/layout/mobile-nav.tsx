@@ -1,28 +1,24 @@
 'use client'
 
-import { useTranslations } from '@tszhong0411/i18n/client'
+import { HEADER_LINKS } from '@/app/config/links'
 import {
   Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from '@tszhong0411/ui'
+} from '@/packages/ui'
 import { MenuIcon } from 'lucide-react'
+import Link from 'next/link'
 
-import { HEADER_LINKS } from '@/config/links'
-
-import Link from '../link'
 
 const MobileNav = () => {
-  const t = useTranslations()
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           className='flex size-9 items-center justify-center p-0 md:hidden'
-          aria-label={t('layout.toggle-menu')}
+          aria-label="Toggle menu"
           variant='ghost'
         >
           <MenuIcon />
@@ -33,7 +29,7 @@ const MobileNav = () => {
           <DropdownMenuItem key={link.key} asChild>
             <Link href={link.href} className='flex items-center gap-4'>
               {link.icon}
-              <div>{t(`layout.${link.key}`)}</div>
+              <div>{link.key}</div>
             </Link>
           </DropdownMenuItem>
         ))}

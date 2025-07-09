@@ -5,15 +5,15 @@
  */
 import NumberFlow from '@number-flow/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useTranslations } from '@tszhong0411/i18n/client'
-import { Separator, toast } from '@tszhong0411/ui'
+import { Separator, toast } from '@/packages/ui'
 import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
+import { useTRPC } from '@/packages/trpc/client'
+import { useTRPCInvalidator } from '@/app/lib/trpc-invalidator'
+import { createTRPCQueryKeys } from '@/app/lib/trpc-query-helpers'
 
-import { useTRPCInvalidator } from '@/lib/trpc-invalidator'
-import { createTRPCQueryKeys } from '@/lib/trpc-query-helpers'
-import { useTRPC } from '@/trpc/client'
+
 
 type LikeButtonProps = {
   slug: string
@@ -26,7 +26,6 @@ const LikeButton = (props: LikeButtonProps) => {
   const trpc = useTRPC()
   const queryClient = useQueryClient()
   const invalidator = useTRPCInvalidator()
-  const t = useTranslations()
 
   const queryKeys = createTRPCQueryKeys(trpc)
   const queryKey = { slug }
@@ -92,7 +91,7 @@ const LikeButton = (props: LikeButtonProps) => {
   const handleLikeButtonClick = () => {
     if (status === 'pending' || !data) return
     if (data.currentUserLikes + cacheCount >= 3) {
-      toast.error(t('blog.like-limit-reached'))
+      toast.error("You can only like 3 times per post")
       return
     }
 
@@ -112,7 +111,7 @@ const LikeButton = (props: LikeButtonProps) => {
         ref={buttonRef}
         className='flex items-center gap-3 rounded-xl bg-zinc-900 px-4 py-2 text-lg text-white'
         onClick={handleLikeButtonClick}
-        aria-label={t('blog.like-this-post')}
+        aria-label={"Like this post"}
         whileTap={{ scale: 0.96 }}
         type='button'
         data-testid='like-button'
@@ -151,10 +150,10 @@ const LikeButton = (props: LikeButtonProps) => {
             />
           </g>
         </svg>
-        {t('blog.like')}
+        {"Like"}
         <Separator orientation='vertical' className='bg-zinc-700' />
         {status === 'pending' && <div>--</div>}
-        {status === 'error' && <div>{t('common.error')}</div>}
+        {status === 'error' && <div>Error</div>}
         {status === 'success' && (
           <NumberFlow value={data.likes + cacheCount} data-testid='like-count' />
         )}

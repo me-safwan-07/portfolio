@@ -36,7 +36,8 @@ const Footer = () => {
       <div className='mt-20 flex items-center justify-between text-sm'>
         <div>&copy; {new Date().getFullYear()} Muhammed Safwan</div>
         <Link
-          href='https://git.new/me-safwan-07'
+          // href='https://git.new/me-safwan-07'
+          href='https://git.new/miLwSQw'
           className='flex items-center justify-center overflow-hidden rounded-md border'
         >
           <div className='bg-muted flex h-8 items-center gap-2 border-r px-2'>

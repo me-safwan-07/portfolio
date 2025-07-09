@@ -1,16 +1,14 @@
 'use client'
 
-import { useTranslations } from '@tszhong0411/i18n/client'
-import { usePathname } from '@tszhong0411/i18n/routing'
-import { cn } from '@tszhong0411/utils'
+import { HEADER_LINKS } from "@/app/config/links"
+import { cn } from "@/packages/utils/cn"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
-import { HEADER_LINKS } from '@/config/links'
 
-import Link from '../link'
 
 const Navbar = () => {
   const pathname = usePathname()
-  const t = useTranslations()
 
   return (
     <nav className='hidden md:block'>
@@ -27,7 +25,7 @@ const Navbar = () => {
                 })}
                 href={link.href}
               >
-                {t(`layout.${link.key}`)}
+                {link.key.charAt(0).toUpperCase() + link.key.slice(1)}
               </Link>
               {isActive && (
                 <>

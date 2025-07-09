@@ -90,6 +90,7 @@ const GetInTouch = () => {
             >
               JavaScript
             </div>
+            
 
             <div id='pointer' className='absolute'>
               <svg
@@ -108,7 +109,7 @@ const GetInTouch = () => {
                 />
               </svg>
               <span className='relative left-4 rounded-3xl bg-red-500 px-2 py-0.5 text-xs text-white'>
-                Nelson
+                Safwan
               </span>
             </div>
           </div>

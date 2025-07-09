@@ -17,6 +17,7 @@ import TableOfContents from './table-of-contents'
 import { SITE_NAME, SITE_URL } from '@/app/lib/constants'
 import Mdx from '@/app/components/mdx/mdx'
 import { flags } from '@/packages/env'
+import CommentSection from '@/app/components/comment-section'
 
 type PageProps = {
   params: Promise<{
@@ -154,22 +155,22 @@ const Page = async (props: PageProps) => {
           </article>
           <aside className='lg:min-w-[270px] lg:max-w-[270px]'>
             <div className='sticky top-24'>
-              {/* {toc.length > 0 && <TableOfContents toc={toc} />} */}
-              {/* {flags.likeButton && <LikeButton slug={slug} />} */}
+              {toc.length > 0 && <TableOfContents toc={toc} />} 
+              {flags.likeButton && <LikeButton slug={slug} />}
             </div>
           </aside>
         </div>
         <ProgressBar />
 
-        {/* {toc.length > 0 && <MobileTableOfContents toc={toc} />} */}
+        {toc.length > 0 && <MobileTableOfContents toc={toc} />}
         <Footer />
       </Providers>
 
-      {/* {flags.comment && (
+      {flags.comment && (
         <Suspense>
           <CommentSection slug={slug} />
         </Suspense>
-      )} */}
+      )}
     </>
   )
 }

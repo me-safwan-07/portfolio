@@ -1,6 +1,6 @@
 'use client'
 
-import { SiFacebook, SiGithub, SiInstagram, SiX, SiYoutube } from '@icons-pack/react-simple-icons'
+import { SiGithub, SiInstagram, SiX, SiYoutube } from '@icons-pack/react-simple-icons'
 import {
   Button,
   CommandDialog,
@@ -14,16 +14,15 @@ import {
 import { CodeIcon, CommandIcon, LinkIcon, LogInIcon, LogOutIcon } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useState } from 'react'
 
-import { useCopyToClipboard } from '@/app/hooks/use-copy-to-clipboard'
-import { signOut, useSession } from '@/lib/auth-client'
+import { useCopyToClipboard } from '../hooks/use-copy-to-clipboard'
+import { signOut, useSession } from '../lib/auth-client'
 import {
-  SITE_FACEBOOK_URL,
   SITE_GITHUB_URL,
   SITE_INSTAGRAM_URL,
   SITE_X_URL,
   SITE_YOUTUBE_URL
-} from '@/app/lib/constants'
-import { useDialogsStore } from '@/stores/dialogs'
+} from '../lib/constants'
+import { useDialogsStore } from '../stores/dialogs'
 import { useRouter } from 'next/navigation'
 
 type Groups = Array<{
@@ -62,7 +61,7 @@ const CommandMenu = () => {
 
   const groups: Groups = [
     {
-      name: 'Account',
+      name: "Account",
       actions: [
         ...(session
           ? [
@@ -107,7 +106,7 @@ const CommandMenu = () => {
         {
           title: "Source code",
           icon: <CodeIcon />,
-          onSelect: () => openLink('https://github.com/tszhong0411/nelsonlai.me')
+          onSelect: () => openLink('https://github.com/me-safwan-07/portfolio')
         }
       ]
     },
@@ -119,11 +118,11 @@ const CommandMenu = () => {
           icon: <SiGithub />,
           onSelect: () => openLink(SITE_GITHUB_URL)
         },
-        {
-          title: 'Facebook',
-          icon: <SiFacebook />,
-          onSelect: () => openLink(SITE_FACEBOOK_URL)
-        },
+        // {
+        //   title: 'Facebook',
+        //   icon: <SiFacebook />,
+        //   onSelect: () => openLink(SITE_FACEBOOK_URL)
+        // },
         {
           title: 'Instagram',
           icon: <SiInstagram />,

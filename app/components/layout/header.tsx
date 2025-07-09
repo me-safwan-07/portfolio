@@ -2,18 +2,13 @@
 
 import { motion } from 'motion/react'
 import { useEffect, useState } from 'react'
-
-import CommandMenu from '@/components/command-menu'
-
-
-
-import LocaleSwitcher from './locale-switcher'
 import MobileNav from './mobile-nav'
 import Navbar from './navbar'
 import ThemeSwitcher from './theme-switcher'
 import Link from 'next/link'
 import { Logo } from '@/packages/ui/logo'
 import { cn } from '@/packages/utils/cn'
+import CommandMenu from '../command-menu'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -65,7 +60,7 @@ const Header = () => {
       <div className='flex items-center gap-2'>
         <Navbar />
         <ThemeSwitcher />
-        <LocaleSwitcher />
+        {/* <LocaleSwitcher /> */}
         <CommandMenu />
         <MobileNav />
       </div>

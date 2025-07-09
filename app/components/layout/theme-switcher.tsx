@@ -1,17 +1,15 @@
-import { useTranslations } from '@tszhong0411/i18n/client'
 import {
   Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from '@tszhong0411/ui'
+} from '@/packages/ui'
 import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 const ThemeSwitcher = () => {
   const { setTheme } = useTheme()
-  const t = useTranslations()
 
   return (
     <DropdownMenu>
@@ -19,7 +17,7 @@ const ThemeSwitcher = () => {
         <Button
           variant='ghost'
           className='size-9 p-0'
-          aria-label={t('theme-toggle.toggle-theme')}
+          aria-label={"Toggle theme"}
           data-testid='theme-toggle'
         >
           <SunIcon className='dark:hidden' />
@@ -32,21 +30,21 @@ const ThemeSwitcher = () => {
           onClick={() => setTheme('light')}
           data-testid='theme-light-button'
         >
-          <SunIcon className='size-[18px]' /> {t('theme-toggle.options.light')}
+          <SunIcon className='size-[18px]' /> {"Light"}
         </DropdownMenuItem>
         <DropdownMenuItem
           className='gap-2'
           onClick={() => setTheme('dark')}
           data-testid='theme-dark-button'
         >
-          <MoonIcon className='size-[18px]' /> {t('theme-toggle.options.dark')}
+          <MoonIcon className='size-[18px]' /> {"Dark"}
         </DropdownMenuItem>
         <DropdownMenuItem
           className='gap-2'
           onClick={() => setTheme('system')}
           data-testid='theme-system-button'
         >
-          <MonitorIcon className='size-[18px]' /> {t('theme-toggle.options.system')}
+          <MonitorIcon className='size-[18px]' /> {"System"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
