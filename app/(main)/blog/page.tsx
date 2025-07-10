@@ -5,6 +5,7 @@ import { allPosts } from 'content-collections'
 import { SITE_NAME, SITE_URL } from '@/app/lib/constants'
 import PageTitle from '@/app/components/page-title'
 import FilteredPosts from '@/app/components/filtered-posts'
+import { getPath } from '@/app/utils/get-path'
 
 
 type PageProps = {
@@ -13,48 +14,40 @@ type PageProps = {
   }>
 }
 
-// export const generateStaticParams = (): Array<{ locale: string }> => {
-//   return i18n.locales.map((locale) => ({ locale }))
-// }
+export const generateMetadata = async (
+  props: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> => {
+  const previousOpenGraph = (await parent).openGraph ?? {}
+  const previousTwitter = (await parent).twitter ?? {}
+  const title = 'Blog'
+  const description = 'My personal website and blog where I share my thoughts on various topics including tutorials, notes, and personal experiences. As a full-stack engineer from Hong Kong, I started learning web development as a hobby in December 2020. I use Next.js for building websites, GitHub for code hosting, and Vercel for deployment. Explore my site to learn more about my Journey and discover some of the web development resources that have inspired me.'
+  const slug = '/blog'
+  const url = getPath(slug);
 
-// export const generateMetadata = async (
-//   props: PageProps,
-//   parent: ResolvingMetadata
-// ): Promise<Metadata> => {
-//   const { locale } = await props.params
-//   const previousOpenGraph = (await parent).openGraph ?? {}
-//   const previousTwitter = (await parent).twitter ?? {}
-//   const t = await getTranslationS({ locale, namespace: 'blog' })
-//   const title = t('title')
-//   const description = t('description')
-//   const slug = '/blog'
-//   const url = getLocalizedPath({ slug, locale, absolute: false })
-
-//   return {
-//     title,
-//     description,
-//     alternates: {
-//       canonical: url,
-//       languages: {
-//         ...Object.fromEntries(
-//           i18n.locales.map((l) => [l, getLocalizedPath({ slug, locale: l, absolute: false })])
-//         ),
-//         'x-default': getLocalizedPath({ slug, locale: i18n.defaultLocale, absolute: false })
-//       }
-//     },
-//     openGraph: {
-//       ...previousOpenGraph,
-//       url,
-//       title,
-//       description
-//     },
-//     twitter: {
-//       ...previousTwitter,
-//       title,
-//       description
-//     }
-//   }
-// }
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+      languages: {
+        'en': url,
+        'x-default': url,
+      }
+    },
+    openGraph: {
+      ...previousOpenGraph,
+      url,
+      title,
+      description
+    },
+    twitter: {
+      ...previousTwitter,
+      title,
+      description
+    }
+  }
+}
 
 const Page = async () => {
   const title = "Blog"

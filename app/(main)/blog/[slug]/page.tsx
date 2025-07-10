@@ -18,6 +18,7 @@ import { SITE_NAME, SITE_URL } from '@/app/lib/constants'
 import Mdx from '@/app/components/mdx/mdx'
 import { flags } from '@/packages/env'
 import CommentSection from '@/app/components/comment-section'
+import { getPath } from '@/app/utils/get-path'
 
 type PageProps = {
   params: Promise<{
@@ -32,78 +33,69 @@ export const generateStaticParams = (): Array<{ slug: string;}> => {
   }))
 }
 
-// export const generateMetadata = async (
-//   props: PageProps,
-//   parent: ResolvingMetadata
-// ): Promise<Metadata> => {
-//   const { slug } = await props.params
+export const generateMetadata = async (
+  props: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> => {
+  const { slug } = await props.params
 
-//   const post = allPosts.find((p) => p.slug === slug)
+  const post = allPosts.find((p) => p.slug === slug)
 
-//   if (!post) return {}
+  if (!post) return {}
 
-//   const { date, modifiedTime, title, summary } = post
+  const { date, modifiedTime, title, summary } = post
 
-//   const ISOPublishedTime = new Date(date).toISOString()
-//   const ISOModifiedTime = new Date(modifiedTime).toISOString()
-//   const previousTwitter = (await parent).twitter ?? {}
-//   const previousOpenGraph = (await parent).openGraph ?? {}
-//   const fullSlug = `/blog/${slug}`
-//   const url = `${SITE_NAME}+${fullSlug}`;
+  const ISOPublishedTime = new Date(date).toISOString()
+  const ISOModifiedTime = new Date(modifiedTime).toISOString()
+  const previousTwitter = (await parent).twitter ?? {}
+  const previousOpenGraph = (await parent).openGraph ?? {}
+  const fullSlug = `/blog/${slug}`
+  const url = `${SITE_NAME}+${fullSlug}`;
 
-//   return {
-//     title: title,
-//     description: summary,
-//     alternates: {
-//       canonical: url,
-//       languages: {
-//         ...Object.fromEntries(
-//           i18n.locales.map((l) => [
-//             l,
-//             getLocalizedPath({ slug: fullSlug, locale: l, absolute: false })
-//           ])
-//         ),
-//         'x-default': getLocalizedPath({
-//           slug: fullSlug,
-//           locale: i18n.defaultLocale,
-//           absolute: false
-//         })
-//       }
-//     },
-//     openGraph: {
-//       ...previousOpenGraph,
-//       url,
-//       type: 'article',
-//       title: title,
-//       description: summary,
-//       publishedTime: ISOPublishedTime,
-//       modifiedTime: ISOModifiedTime,
-//       authors: SITE_URL,
-//       images: [
-//         {
-//           url: `/og/${slug}`,
-//           width: 1200,
-//           height: 630,
-//           alt: title,
-//           type: 'image/png'
-//         }
-//       ]
-//     },
-//     twitter: {
-//       ...previousTwitter,
-//       title: title,
-//       description: summary,
-//       images: [
-//         {
-//           url: `/og/${slug}`,
-//           width: 1200,
-//           height: 630,
-//           alt: title
-//         }
-//       ]
-//     }
-//   }
-// }
+  return {
+    title: title,
+    description: summary,
+    alternates: {
+      canonical: url,
+      languages: {
+          'en': getPath(fullSlug),
+        'x-default': getPath(fullSlug)
+      }
+    },
+    openGraph: {
+      ...previousOpenGraph,
+      url,
+      type: 'article',
+      title: title,
+      description: summary,
+      publishedTime: ISOPublishedTime,
+      modifiedTime: ISOModifiedTime,
+      authors: SITE_URL,
+      images: [
+        {
+          url: `/og/${slug}`,
+          width: 1200,
+          height: 630,
+          alt: title,
+          type: 'image/png'
+        }
+      ]
+    },
+    twitter: {
+      ...previousTwitter,
+      title: title,
+      description: summary,
+      images: [
+        {
+          url: `/og/${slug}`,
+          width: 1200,
+          height: 630,
+          alt: title
+        }
+      ]
+    }
+  }
+}
 
 const Page = async (props: PageProps) => {
   const { slug } = await props.params
@@ -147,7 +139,7 @@ const Page = async (props: PageProps) => {
       />
 
       <Providers post={post}>
-        {/* <Header /> */}
+        <Header />
 
         <div className='mt-8 flex flex-col justify-between lg:flex-row'>
           <article className='w-full lg:w-[670px]'>

@@ -17,25 +17,25 @@ const Header = () => {
   const trpc = useTRPC()
   const invalidator = useTRPCInvalidator()
 
-  // const incrementMutation = useMutation(
-  //   trpc.views.increment.mutationOptions({
-  //     onSettled: async () => {
-  //       await invalidator.views.invalidateBySlug(slug)
-  //     }
-  //   })
-  // )
+  const incrementMutation = useMutation(
+    trpc.views.increment.mutationOptions({
+      onSettled: async () => {
+        await invalidator.views.invalidateBySlug(slug)
+      }
+    })
+  )
 
-  // const viewCountQuery = useQuery(trpc.views.get.queryOptions({ slug }))
-  // const commentCountQuery = useQuery(trpc.comments.getTotalCommentCount.queryOptions({ slug }))
+  const viewCountQuery = useQuery(trpc.views.get.queryOptions({ slug }))
+  const commentCountQuery = useQuery(trpc.comments.getTotalCommentCount.queryOptions({ slug }))
 
   const incremented = useRef(false)
 
-  // useEffect(() => {
-  //   if (!incremented.current) {
-  //     incrementMutation.mutate({ slug })
-  //     incremented.current = true
-  //   }
-  // }, [incrementMutation, slug])
+  useEffect(() => {
+    if (!incremented.current) {
+      incrementMutation.mutate({ slug })
+      incremented.current = true
+    }
+  }, [incrementMutation, slug])
 
   return (
     <div className='space-y-16 py-16'>
