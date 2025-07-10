@@ -91,23 +91,23 @@ const createTRPCInvalidator = (queryClient: QueryClient, trpc: TRPCUtils) => {
   }
 
   return {
-    // comments: commentsInvalidator,
-    // likes: {
-    //   invalidateBySlug: async (slug: string) => {
-    //     logger.info('[likes] Invalidating by slug', { slug })
-    //     await queryClient.invalidateQueries({
-    //       queryKey: queryKeys.likes.get(slug)
-    //     })
-    //   }
-    // },
-    // views: {
-    //   invalidateBySlug: async (slug: string) => {
-    //     logger.info('[views] Invalidating by slug', { slug })
-    //     await queryClient.invalidateQueries({
-    //       queryKey: queryKeys.views.get(slug)
-    //     })
-    //   }
-    // },
+    comments: commentsInvalidator,
+    likes: {
+      invalidateBySlug: async (slug: string) => {
+        logger.info('[likes] Invalidating by slug', { slug })
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.likes.get(slug)
+        })
+      }
+    },
+    views: {
+      invalidateBySlug: async (slug: string) => {
+        logger.info('[views] Invalidating by slug', { slug })
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.views.get(slug)
+        })
+      }
+    },
     // guestbook: {
     //   invalidateAll: async () => {
     //     logger.info('[guestbook] Invalidating all messages')

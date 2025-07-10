@@ -78,9 +78,7 @@ const SelectedProjects = () => {
         <Link
           href='/projects'
           className={cn(
-            buttonVariants({
-              variant: 'outline'
-            }),
+            buttonVariants({ variant: 'outline' }),
             'rounded-xl'
           )}
         >

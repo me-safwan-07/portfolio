@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/packages/utils/cn";
 import Providers from "./providers";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import SignInDialog from "./components/sign-in-dialog";
 
 const fontSans = Geist({
   subsets: ['latin'],
@@ -38,6 +39,7 @@ export default function RootLayout({
         <NuqsAdapter>
           <Providers>
               {children}
+              <SignInDialog />
           </Providers>
         </NuqsAdapter>
       </body>

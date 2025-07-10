@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 import { BlurImage } from '../ui/blur-image'
 
-
 const TEXTS = [
   {
     key: 'amazing',
