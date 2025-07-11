@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import NextLink from 'next/link'
 import { cn } from '../utils/cn'
 
-const linkVariants = cva({
+const linkVariants = cva('', {
   variants: {
     variant: {
       muted: 'text-muted-foreground hover:text-foreground transition-colors'
@@ -20,7 +20,7 @@ const Link = (props: LinkProps) => {
 
   if (href.startsWith('/')) {
     return (
-      <NextLink className={cn(linkVariants({ variant, className }))} href={href} {...rest}>
+      <NextLink className={cn(linkVariants({ variant }), className)} href={href} {...rest}>
         {children}
       </NextLink>
     )
@@ -28,7 +28,7 @@ const Link = (props: LinkProps) => {
 
   if (href.startsWith('#')) {
     return (
-      <a className={cn(linkVariants({ variant, className }))} href={href} {...rest}>
+      <a className={cn(linkVariants({ variant }), className)} href={href} {...rest}>
         {children}
       </a>
     )
@@ -36,7 +36,7 @@ const Link = (props: LinkProps) => {
 
   return (
     <a
-      className={cn(linkVariants({ variant, className }))}
+      className={cn(linkVariants({ variant }), className)}
       target='_blank'
       rel='noopener noreferrer'
       href={href}
