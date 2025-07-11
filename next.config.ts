@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+import "./packages/env";
+
 import { withContentCollections } from '@content-collections/next'
 import bundleAnalyzer from '@next/bundle-analyzer';
 import { NextConfigHeaders } from '@/packages/shared'
