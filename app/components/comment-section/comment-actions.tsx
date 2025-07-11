@@ -14,18 +14,20 @@ import { cn } from '@/packages/utils/cn'
 import { useRatesStore } from '@/app/stores/rates'
 
 
-const rateVariants = cva({
-  base: buttonVariants({
+const rateVariants = cva(
+  buttonVariants({
     variant: 'secondary',
     className: 'h-8 gap-1.5 px-2 font-mono text-xs font-medium'
   }),
-  variants: {
-    active: {
-      true: 'bg-accent text-accent-foreground',
-      false: 'text-muted-foreground'
+  {
+    variants: {
+      active: {
+        true: 'bg-accent text-accent-foreground',
+        false: 'text-muted-foreground'
+      }
     }
   }
-})
+)
 
 const CommentActions = () => {
   const { slug, sort } = useCommentsStore((state) => ({ slug: state.slug, sort: state.sort }))

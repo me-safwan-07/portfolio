@@ -61,22 +61,22 @@ const Header = () => {
             <div className='text-muted-foreground'>Published on</div>
             <div>{formattedDate}</div>
           </div>
-          {/* <div className='space-y-1 md:mx-auto'>
+          <div className='space-y-1 md:mx-auto'>
             <div className='text-muted-foreground'>Views</div>
             {viewCountQuery.status === 'pending' && '--'}
             {viewCountQuery.status === 'error' && "Error"}
             {viewCountQuery.status === 'success' && (
               <NumberFlow value={viewCountQuery.data.views} data-testid='view-count' />
             )}
-          </div> */}
-          {/* <div className='space-y-1 md:mx-auto'>
+          </div>
+          <div className='space-y-1 md:mx-auto'>
             <div className='text-muted-foreground'>Comments</div>
             {commentCountQuery.status === 'pending' && '--'}
             {commentCountQuery.status === 'error' && "Error"}
             {commentCountQuery.status === 'success' && (
               <NumberFlow value={commentCountQuery.data.comments} data-testid='comment-count' />
             )}
-          </div> */}
+          </div>
         </div>
       </div>
       <ImageZoom

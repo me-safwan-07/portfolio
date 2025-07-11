@@ -1,11 +1,11 @@
 'use client'
 
 import {
-  SiCloudflare,
+  // SiCloudflare,
   SiCloudinary,
   SiCss,
   SiDrizzle,
-  SiFigma,
+  // SiFigma,
   SiFirebase,
   SiGit,
   SiHtml5,

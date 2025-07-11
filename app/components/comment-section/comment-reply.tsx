@@ -117,7 +117,6 @@ const CommentReply = () => {
           onEscape={() => setIsReplying(false)}
           placeholder={"Reply to comment"}
           disabled={disabled}
-          // eslint-disable-next-line jsx-a11y/no-autofocus -- Autofocus is necessary because user is replying to a comment
           autoFocus
           data-testid='comment-textarea-reply'
         />

@@ -4,8 +4,6 @@ import { TRPCReactProvider } from '@/packages/trpc/client'
 import { Toaster, TooltipProvider } from '@/packages/ui'
 import { ThemeProvider } from 'next-themes'
 
-
-
 type ProvidesProps = {
   children: React.ReactNode
 }

@@ -55,7 +55,7 @@ const Header = () => {
         className='flex items-center justify-center gap-1'
         aria-label={'Home'}
       >
-        <Logo width={28} height={28} aria-hidden='true' />
+        <Logo width={80} height={80} aria-hidden='true' />
       </Link>
       <div className='flex items-center gap-2'>
         <Navbar />

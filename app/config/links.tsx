@@ -7,7 +7,7 @@ import {
 } from '@icons-pack/react-simple-icons'
 import {
   FlameIcon,
-  MonitorIcon,
+  // MonitorIcon,
   PencilIcon,
   UserCircleIcon
 } from 'lucide-react'
@@ -51,11 +51,11 @@ export const HEADER_LINKS = [
     href: '/about',
     key: 'about'
   },
-  {
-    icon: <MonitorIcon className='size-3.5' />,
-    href: '/uses',
-    key: 'uses'
-  }
+  // {
+  //   icon: <MonitorIcon className='size-3.5' />,
+  //   href: '/uses',
+  //   key: 'uses'
+  // }
 ] as const
 
 export const FOOTER_LINKS = [
@@ -72,7 +72,7 @@ export const FOOTER_LINKS = [
     id: 2,
     links: [
       // { href: '/guestbook', key: 'guestbook' },
-      { href: '/uses', key: 'uses' },
+      // { href: '/uses', key: 'uses' },
       { href: '/projects', key: 'projects' },
       { href: 'https://links.nelsonlai.me', key: 'links' }
     ]

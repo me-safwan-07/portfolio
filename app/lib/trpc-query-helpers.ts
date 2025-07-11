@@ -33,8 +33,8 @@ export const createTRPCQueryKeys = (trpc: TRPCUtils) => ({
     get: (slug: string) => trpc.views.get.queryKey({ slug })
   },
 
-  guestbook: {
-    infiniteMessages: (params: { cursor?: Date; limit?: number } = {}) =>
-      trpc.guestbook.getInfiniteMessages.infiniteQueryKey(params)
-  }
+  // guestbook: {
+  //   infiniteMessages: (params: { cursor?: Date; limit?: number } = {}) =>
+  //     trpc.guestbook.getInfiniteMessages.infiniteQueryKey(params)
+  // }
 })

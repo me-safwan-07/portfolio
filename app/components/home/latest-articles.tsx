@@ -104,8 +104,8 @@ const Card = (props: CardProps) => {
   const formattedDate = useFormattedDate(date)
   const trpc = useTRPC()
 
-  // const viewsQuery = useQuery(trpc.views.get.queryOptions({ slug }))
-  // const likesQuery = useQuery(trpc.likes.get.queryOptions({ slug }))
+  const viewsQuery = useQuery(trpc.views.get.queryOptions({ slug }))
+  const likesQuery = useQuery(trpc.likes.get.queryOptions({ slug }))
 
   return (
     <Link href={`/blog/${slug}`} className='shadow-feature-card group relative rounded-xl p-2'>
@@ -125,7 +125,7 @@ const Card = (props: CardProps) => {
       />
       <div className='flex items-center justify-between gap-2 px-2 pt-4 text-sm text-zinc-500'>
         {formattedDate}
-        {/* <div className='flex gap-2'>
+        <div className='flex gap-2'>
           {likesQuery.status === 'pending' && '--'}
           {likesQuery.status === 'error' && "Error"}
           {likesQuery.status === 'success' && (
@@ -137,7 +137,7 @@ const Card = (props: CardProps) => {
           {viewsQuery.status === 'success' && (
             <div>`${viewsQuery.data.views} views`</div>
           )}
-        </div> */}
+        </div>
       </div>
       <div className='flex flex-col px-2 py-4 transition-transform ease-out group-hover:translate-x-0.5'>
         <h3 className='text-2xl font-semibold'>{title}</h3>
