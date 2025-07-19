@@ -129,13 +129,13 @@ const Card = (props: CardProps) => {
           {likesQuery.status === 'pending' && '--'}
           {likesQuery.status === 'error' && "Error"}
           {likesQuery.status === 'success' && (
-            <div>`${likesQuery.data.likes} likes`</div>
+            <div>{likesQuery.data.likes} likes</div>
           )}
           <div>&middot;</div>
           {viewsQuery.status === 'pending' && '--'}
           {viewsQuery.status === 'error' && "Error"}
           {viewsQuery.status === 'success' && (
-            <div>`${viewsQuery.data.views} views`</div>
+            <div>{viewsQuery.data.views} views</div>
           )}
         </div>
       </div>
