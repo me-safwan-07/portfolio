@@ -46,15 +46,15 @@ const Header = () => {
         <div className='grid grid-cols-2 text-sm max-md:gap-4 md:grid-cols-4'>
           <div className='space-y-1 md:mx-auto'>
             <div className='text-muted-foreground'>Written by</div>
-            <Link href='https://github.com/tszhong0411' className='flex items-center gap-2'>
+            <Link href='https://github.com/me-safwan-07' className='flex items-center gap-2'>
               <BlurImage
-                src='/images/avatar.png'
+                src='/images/me.jpg'
                 className='rounded-full'
                 width={24}
                 height={24}
                 alt='Nelson Lai'
               />
-              Nelson Lai
+              Muhammed Safwan
             </Link>
           </div>
           <div className='space-y-1 md:mx-auto'>

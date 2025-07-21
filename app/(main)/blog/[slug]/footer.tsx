@@ -8,7 +8,7 @@ import { usePostStore } from '@/app/stores/post'
 const Footer = () => {
   const { slug, modifiedTime } = usePostStore((state) => state.post)
 
-  const editURL = `https://github.com/me-safwan-07/portfolio/blob/main/apps/web/src/content/blog/${slug}.mdx?plain=1`
+  const editURL = `https://github.com/me-safwan-07/portfolio/tree/main/content/blog/${slug}.mdx?plain=1`
 
   const formattedDate = useFormattedDate(modifiedTime)
 
