@@ -7,7 +7,7 @@ export const GET = async () => {
 
   const feed = new RSS({
     title: "Muhammed Safwan - A Full Stack Developer",
-    description: "Nelson Lai • 20 y/o • Student • Full Stack Developer",
+    description: "Muhammed Safan • 20 y/o • Student • Full Stack Developer",
     site_url: SITE_URL,
     feed_url: `${SITE_URL}/rss.xml`,
     language: 'en-US',
