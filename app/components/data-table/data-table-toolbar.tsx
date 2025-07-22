@@ -3,7 +3,7 @@
  * Copyright (c) Sadman Sakib
  * Source: https://github.com/sadmann7/shadcn-table/blob/67bfe74c0454c7f657aa22c3d39a4926d6ebaf37/src/components/data-table/data-table-toolbar.tsx
  *
- * Modified by: tszhong0411
+ * Modified by: me-safwan-07
  */
 import type { Column, Table } from '@tanstack/react-table'
 
