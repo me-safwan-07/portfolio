@@ -362,7 +362,7 @@ export const commentsRouter = createTRPCRouter({
           if (!isProduction || !resend) return
 
           await resend.emails.send({
-            from: 'Nelson Lai <me@nelsonlai.me>',
+            from: 'Muhammed Safwan <mesafwan07@gmail.com>',
             to: env.AUTHOR_EMAIL,
             subject: 'New comment on your blog post',
             react: CommentEmailTemplate({
