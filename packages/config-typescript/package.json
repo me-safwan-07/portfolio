@@ -1,0 +1,15 @@
+{
+  "name": "@portfolio/config-typescript",
+  "version": "1.0.0",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf node_modules dist turbo"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.1",
+    "typescript": "^5.9.3"
+  }
+}

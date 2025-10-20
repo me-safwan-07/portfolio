@@ -1,12 +1,16 @@
 {
-  "name": "@repo/eslint-config",
+  "name": "@portfolio/eslint-config",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
-  "exports": {
-    "./base": "./base.js",
-    "./next-js": "./next.js",
-    "./react-internal": "./react-internal.js"
+  "sideEffects": false,
+  "main": "./index.ts",
+  "scripts": {
+    "clean": "rimraf .turbo node_modules dist",
+    "lint": "eslint . --ext .ts,.js,.tsx,.jsx",
+    "lint:fix": "eslint . --ext .ts,.js,.tsx,.jsx --fix",
+    "lint:report": "eslint . --format json --output-file ../../lint-results/app-store.json",
+    "test:dev": "vitest",
+    "test": "dotenv -e ../../.env -- vitest run"
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",
