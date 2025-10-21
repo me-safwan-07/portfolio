@@ -70,7 +70,7 @@ const Hero = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ ease: 'easeOut' }}
             >
-              {'homepage.hero.title-top'}
+              I'm Muhammed Safwan, a Full Stack Developer
             </motion.div>
             <motion.div
               initial={{ x: 30, opacity: 0 }}
@@ -83,7 +83,7 @@ const Hero = () => {
                 key='title-middle-left'
                 className='leading-[30px] sm:leading-[45px]'
               >
-                {'homepage.hero.title-middle-left'}
+                building
               </motion.div>
               <div className='relative overflow-hidden'>
                 <AnimatePresence mode='popLayout'>
@@ -100,7 +100,9 @@ const Hero = () => {
                     }}
                     className='inline-flex items-center justify-center leading-[30px] sm:leading-[45px]'
                   >
-                    <span className={textItem.className}>{`homepage.hero.${textItem.key}`}</span>
+                    <span className={textItem.className}>
+                      {textItem.key}
+                    </span>
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -109,7 +111,7 @@ const Hero = () => {
                 key='title-middle-right'
                 className='leading-[30px] sm:leading-[45px]'
               >
-                {'homepage.hero.title-middle-right'}
+                websites using
               </motion.div>
             </motion.div>
             <motion.div
@@ -117,17 +119,9 @@ const Hero = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ ease: 'easeOut' }}
             >
-              {'homepage.hero.title-bottom'}
+              Next.js
             </motion.div>
           </h1>
-          <motion.div
-            initial={{ x: 50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ ease: 'easeOut' }}
-            className='text-muted-foreground text-sm'
-          >
-            {'homepage.hero.location-timezone'}
-          </motion.div>
         </div>
         <motion.div
           className='relative hidden size-28 md:block'

@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@portfolio/lib": "workspace:*",
+    "class-variance-authority": "^0.7.1",
     "framer-motion": "^12.23.24",
     "tw-animate-css": "^1.4.0"
   },
