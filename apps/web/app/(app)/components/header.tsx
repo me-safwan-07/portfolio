@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react'
 import {Logo} from '@portfolio/ui/Logo';
 import Navbar from './navbar';
+import ThemeSwitcher from './theme-switcher';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -54,8 +55,8 @@ const Header = () => {
       </Link>
       <div className='flex items-center gap-2'>
         <Navbar />
-        {/* <ThemeSwitcher />
-        <LocaleSwitcher />
+        <ThemeSwitcher />
+        {/* <LocaleSwitcher />
         <CommandMenu />
         <MobileNav /> */}
       </div> 

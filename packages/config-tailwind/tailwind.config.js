@@ -72,6 +72,9 @@ module.exports = {
           },
         },
       }),
+      background: {
+        "nav-link-indicator": "var(--nav-link-indicator)",
+      }
     },
   },
   plugins: [
