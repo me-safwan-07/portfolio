@@ -1,11 +1,10 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 import type { SoftwareApplication, WithContext } from 'schema-dts'
 
-import { allExperiences, allProjects } from 'content-collections'
+import { allExperiences } from 'content-collections'
 import { notFound } from 'next/navigation'
 
 import Header from './header'
-import { BlurImage } from '@/app/components/ui/blur-image'
 import Mdx from '@/app/components/mdx/mdx'
 import { getPath } from '@/app/utils/get-path'
 import { SITE_NAME, SITE_URL } from '@/app/lib/constants'
@@ -77,6 +76,17 @@ export const generateMetadata = async (
   }
 }
 
+const animation = {
+  hide: {
+    x: -30,
+    opacity: 0
+  },
+  show: {
+    x: 0,
+    opacity: 1
+  }
+}
+
 const Page = async (props: PageProps) => {
   const { slug } = await props.params;
 
@@ -113,14 +123,6 @@ const Page = async (props: PageProps) => {
       />
       <div className='mx-auto max-w-3xl'>
         <Header {...experience} />
-        <BlurImage
-          src={`/images/experience/${slug}/cover.png`}
-          width={1280}
-          height={832}
-          alt={company}
-          className='my-12 rounded-lg'
-          lazy={false}
-        />
         <Mdx code={code} />
       </div>
     </>

@@ -1,5 +1,6 @@
 'use client'
 
+import { BlurImage } from '@/app/components/ui/blur-image'
 import type { Experience } from 'content-collections'
 
 // import { ArrowUpRightIcon } from 'lucide-react'
@@ -24,38 +25,31 @@ const animation = {
 type HeaderProps = Experience
 
 const Header = (props: HeaderProps) => {
-  const { company, description } = props
+  const { company, slug, position } = props
 
   return (
-    <div className='space-y-8 pt-10'>
-      <motion.div
-        className='flex items-center gap-3'
-        initial={animation.hide}
-        animate={animation.show}
-      >
-        <div className='flex flex-col gap-3'>
+    <div className="flex items-center justify-start gap-6">
+        <BlurImage
+          src={`/images/experience/${slug}/cover.png`}
+          width={60}
+          height={60}
+          alt={company}
+          className='my-12 border rounded-full'
+          lazy={false}
+          />
+
+          <motion.div
+            className='flex flex-col'
+            initial={animation.hide}
+            animate={animation.show}
+          >
           <h1 className='text-3xl font-bold'>{company}</h1>
-          <h2 className='text-muted-foreground'>{description}</h2>
+          <p className='text-lg text-muted-foreground'>{position}</p>
+          {/* <h2 className='text-muted-foreground'>{description}</h2> */}
+        </motion.div>
+
+        {/* <Header {...experience} /> */}
         </div>
-      </motion.div>
-      {/* <motion.div
-        className='flex flex-col items-start gap-2 sm:flex-row sm:gap-4'
-        initial={animation.hide}
-        animate={animation.show}
-        transition={{ delay: 0.1 }}
-      >
-        {homepage && (
-          <Link href={homepage} className={cn(buttonVariants(), 'group')}>
-            Visit Website
-            <ArrowUpRightIcon className='size-5 transition-transform group-hover:-rotate-12' />
-          </Link>
-        )}
-        <Link href={github} className={cn(buttonVariants(), 'group')}>
-          {GITHUB_USERNAME}/{repo}
-          <ArrowUpRightIcon className='size-5 transition-transform group-hover:-rotate-12' />
-        </Link>
-      </motion.div> */}
-    </div>
   )
 }
 export default Header

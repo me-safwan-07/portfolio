@@ -1,6 +1,6 @@
 import { allExperiences } from "@/.content-collections/generated";
 import PageTitle from "@/app/components/page-title";
-import ExperienceCards from "@/app/components/experience-cards";
+import { Timeline } from "@/app/components/experience-timeline";
 
 const Page = async () => {
     const title = "Experience";
@@ -9,7 +9,7 @@ const Page = async () => {
     return (
         <>
             <PageTitle title={title} description={description} />
-            <ExperienceCards experiences={allExperiences}/>
+            <Timeline items={allExperiences} />
         </>
     )
 };

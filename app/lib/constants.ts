@@ -1,6 +1,6 @@
 export const isProduction = process.env.NODE_ENV === 'production'
 
-export const SITE_URL = isProduction ? 'https://mohdsafwan.vercel.app' : 'http://localhost:3000'
+export const SITE_URL = isProduction ? 'https://www.muhammadsafwan.com' : 'http://localhost:3000'
 
 export const GITHUB_USERNAME = 'me-safwan-07'
 

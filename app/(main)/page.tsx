@@ -5,7 +5,7 @@ import Hero from "../components/home/hero";
 import LatestArticles from "../components/home/latest-articles";
 import SelectedProjects from "../components/selected-projects";
 import { SITE_GITHUB_URL, SITE_INSTAGRAM_URL, SITE_KEYWORDS, SITE_NAME, SITE_URL, SITE_X_URL, SITE_YOUTUBE_URL } from "../lib/constants";
-import SelectedExperiences from "../components/selected-experience";
+import {SelectedExperience} from "../components/selected-experience";
 
 const Page = () => {
 
@@ -39,7 +39,7 @@ const Page = () => {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <Hero />
-            <SelectedExperiences />
+            <SelectedExperience />
             <AboutMe />
             <SelectedProjects />
             <LatestArticles />
