@@ -39,7 +39,7 @@ export const generateMetadata = async (
 }
 
 const Page = async () => {
-  const title = "Skills"
+  const title = "Stacks"
   const description = "This is the equipment I currently use for gaming, programming, making videos, and every day."
   const url = `${SITE_NAME}/stacks`
   const page = allPages.find((p) => p.slug === 'stacks')
