@@ -1,0 +1,137 @@
+---
+name: Projextly
+description: A full-stack project marketplace and mentorship platform — built as a Turborepo monorepo with a Next.js web app, a dedicated admin panel, and an MDX documentation site.
+homepage: https://www.projextly.com
+techstack:
+  - "Next.js"
+  - "TypeScript"
+  - "Turborepo"
+  - "Prisma"
+  - "PostgreSQL"
+  - "NextAuth"
+  - "Tailwind CSS"
+  - "Cloudinary"
+  - "Razorpay"
+  - "Sentry"
+  - "pnpm Workspaces"
+---
+
+
+## Overview
+
+**Projextly** is a full-stack project marketplace — a place where developers can browse, purchase, and download source-code projects, and where clients can submit custom project requests. The platform is split across three applications that share a common library, database layer, UI kit, and type definitions inside a single **Turborepo** monorepo.
+
+---
+
+## Architecture
+
+The repository follows a monorepo layout managed by **Turborepo** and **pnpm workspaces**:
+
+```
+apps/
+  web/        → public-facing marketplace (Next.js)
+  admin/      → internal CMS / dashboard (Next.js)
+  docs/       → MDX documentation site (Next.js + @next/mdx)
+packages/
+  database/   → Prisma schema + generated client
+  lib/        → shared services, auth config, storage, email
+  ui/         → shared React component library
+  types/      → Zod schemas + TypeScript types
+  email/      → React Email templates
+  config-*/   → shared ESLint, TypeScript, Tailwind configs
+```
+
+Turborepo handles task pipelines — `build` waits for `^build` across all packages, environment variables are declared once in `turbo.json`, and remote caching via Vercel makes CI fast across the team.
+
+---
+
+## Key Features
+
+**Marketplace (web app)**
+- Browse and search projects by category, tech stack, and features
+- Purchase paid projects via **Razorpay** payment integration
+- Download free or purchased projects — files served from **Cloudinary** with signed, time-limited URLs
+- Submit custom project requests with deadline, budget, tech stack, and reference links
+- Google OAuth + email/password authentication via **NextAuth**
+
+**Admin Panel**
+- Protected dashboard accessible to users with the `admin` role only
+- Full CRUD for projects, categories, tech stacks, and features, each with paginated server actions
+- Project editor split into focused sections: Basic Info, Features & Tech Stacks, Pages, Links & Resources (file upload or URL), and Pricing — all validated with Zod via `ZProjectInput`
+- Custom project request management with status workflow (pending → reviewing → approved → rejected → completed) and an inline detail modal
+- User management with role-based filtering
+- Overview page with aggregate stats (total users, projects, revenue, downloads)
+- File uploads routed through a signed-URL endpoint to Cloudinary (with local fallback for development)
+
+**Documentation Site**
+- MDX-powered docs app with full-text search, dark mode, and custom typography
+- Shared component library (`@/components/mdx`) with `MdxImage`, `ResponsiveVideo`, `CodeGroup`, and `Note` components
+- Automatic sitemap generation via `next-sitemap`
+
+---
+
+## Tech Stack
+
+| Layer | Choice | Why |
+|---|---|---|
+| Monorepo | Turborepo + pnpm workspaces | Incremental builds, shared packages, remote cache |
+| Framework | Next.js 15 (App Router) | Server Actions, streaming, image optimisation |
+| Language | TypeScript | End-to-end type safety shared across all apps |
+| Database | PostgreSQL + Prisma | Type-safe queries, migrations, shared schema package |
+| Auth | NextAuth v4 | Google OAuth + credentials, session-based role checks |
+| Styling | Tailwind CSS | Shared config across all three apps |
+| Storage | Cloudinary + local fallback | Signed uploads, CDN delivery, download attachments |
+| Payments | Razorpay | INR-native payment gateway |
+| Docs | @next/mdx + Shiki | Syntax-highlighted MDX with remark/rehype plugins |
+| Monitoring | Sentry + Vercel Speed Insights | Error tracking and core web vitals |
+
+---
+
+## Implementation Highlights
+
+### Server Actions as the API Layer
+
+Rather than maintaining a separate REST API, the admin app uses Next.js **Server Actions** for every mutation. Each action validates the session with `getServerSession`, throws a typed `AuthorizationError` if the user isn't authenticated, and delegates to a service function in `@projectmentors/lib`. This keeps the surface area small — no separate route handlers, no client-side fetch boilerplate, and full type inference from server to client.
+
+```ts
+// Example: createCategoryAction in apps/admin
+export const createCategoryAction = async (label: string, slug: string) => {
+  const session = await getServerSession(authOptions);
+  if (!session) throw new AuthorizationError("Not authorized");
+  return await createCategory(label, slug);
+};
+```
+
+### Zod-Validated Project Editor
+
+The `ProjectEditor` component uses a single `ZProjectInput` Zod schema (defined in `@projectmentors/types`) to validate the entire form. On submission, `ZProjectInput.parse()` runs against the assembled payload, maps every `ZodError` issue to a `fieldErrors` state object, and surfaces the first three errors as toasts. Individual fields validate on change via `ZProjectInput.shape[field].parse()` — giving instant inline feedback without a form library.
+
+### Optimistic UI with `useTransition`
+
+CRUD lists (categories, features, tech stacks) wrap mutations in `useTransition` and update local state before the server confirms. Deletes filter the local array immediately; creates prepend the returned record. The UI never blocks on a network round-trip for simple operations.
+
+### Signed URL Storage Architecture
+
+File uploads follow a two-step flow: the client requests a signed URL from `/api/v1/storage` (which calls Cloudinary's upload API), uploads directly from the browser to the CDN, and saves the resulting URL to the database. Downloads are served through `/storage/[accessType]/[fileName]` which generates a short-lived signed Cloudinary URL with a `fl_attachment` transform, ensuring files cannot be hotlinked.
+
+### Collapsible Navigation with Persisted State
+
+The admin sidebar (`MainNavigation`) stores its collapsed/expanded state in `localStorage`, restored on mount via a `useEffect`. Text labels fade in/out with a 150ms `setTimeout` offset to avoid layout jumps during the CSS width transition. Tooltips replace labels when collapsed, built on top of `@projectmentors/ui/Tooltip`.
+
+---
+
+## Challenges
+
+**Shared package boundaries** — Getting TypeScript paths, Tailwind content globs, and Next.js `transpilePackages` aligned across three apps and six packages required careful configuration. The solution was a set of base `@projectmentors/config-*` packages (TypeScript, ESLint, Tailwind) that each app extends, with minimal local overrides.
+
+**Hydration in the rich-text editor** — The `Editor` component accepts either raw Markdown or HTML (from the database). On initial render, Markdown is converted to HTML via `markdown-it` before being passed to the editor. Without a stable key, React hydration mismatched between the server (which renders nothing) and the client. A `key` prop derived from `formData.description` and a `firstRender` gate solved the mismatch at the cost of a deliberate re-mount.
+
+**Cloudinary download filenames** — By default, Cloudinary's CDN returns files with the storage UUID as the filename. The download route extracts the original base name from the path, sanitises it to alphanumeric and hyphens, and injects it as a `fl_attachment:<safeTitle>` URL transform — so buyers receive a file named `react-dashboard.zip` instead of `v1_abc123xyz.zip`.
+
+---
+
+## What I Learned
+
+- Turborepo's `dependsOn: ["^build"]` model forces you to think about package dependency graphs explicitly — and once you do, incremental builds become significantly faster.
+- Zod schemas are most powerful when they live in a shared `types` package: validation runs in the browser (instant feedback), on the server (action safety), and in tests, all from the same source.
+- Server Actions reduce the amount of client-side state you need dramatically — when a mutation returns the updated record, you can replace the local array entry directly rather than refetching.

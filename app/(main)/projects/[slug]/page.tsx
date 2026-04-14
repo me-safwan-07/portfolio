@@ -101,7 +101,7 @@ const Page = async (props: PageProps) => {
       name: SITE_NAME,
       url: SITE_URL
     },
-    sameAs: [github],
+    sameAs: [github ? github : undefined].filter(Boolean) as string[],
     screenshot: `${SITE_URL}/images/projects/${slug}/cover.png`
   }
 

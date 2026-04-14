@@ -30,14 +30,18 @@ import {
 } from '@icons-pack/react-simple-icons'
 import { Marquee } from '@/packages/ui'
 import { ZapIcon } from 'lucide-react'
+import Link from 'next/link'
 
 const StacksCard = () => {
 
   return (
-    <div className='shadow-feature-card flex h-60 flex-col gap-2 overflow-hidden rounded-xl p-4 lg:p-6'>
+    <Link href="/stacks" className='shadow-feature-card flex h-60 flex-col gap-2 overflow-hidden rounded-xl p-4 lg:p-6 cursor-pointer transition-colors hover:bg-zinc-100/50 dark:hover:bg-zinc-800/10'>
       <div className='flex items-center gap-2'>
         <ZapIcon className='size-[18px]' />
-        <h2 className='text-sm'>Stacks</h2>
+        <h2 className='text-sm'>Stacks</h2>                                                                   45    0
+        -+
+
+        <div className="0">+<div className="0"></div></div>
       </div>
       <Marquee gap='20px' className='py-4' fade pauseOnHover>
         <SiHtml5 className='size-10' />
@@ -69,7 +73,7 @@ const StacksCard = () => {
         <SiRedis className='size-10'/>
         <SiPostman className='size-10' />
       </Marquee>
-    </div>
+    </Link>
   )
 }
 

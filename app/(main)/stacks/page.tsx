@@ -41,8 +41,8 @@ export const generateMetadata = async (
 const Page = async () => {
   const title = "Skills"
   const description = "This is the equipment I currently use for gaming, programming, making videos, and every day."
-  const url = `${SITE_NAME}/skills`
-  const page = allPages.find((p) => p.slug === 'skills')
+  const url = `${SITE_NAME}/stacks`
+  const page = allPages.find((p) => p.slug === 'stacks')
 
   const jsonLd: WithContext<WebPage> = {
     '@context': 'https://schema.org',
