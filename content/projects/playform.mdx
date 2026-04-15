@@ -1,0 +1,136 @@
+---
+name: Playform
+description: A full-stack form builder and analytics platform built with Next.js, Turborepo, and Prisma.
+homepage: https://playform.projextly.com
+techstack:
+  - Next.js
+  - TypeScript
+  - Prisma
+  - Turborepo
+  - Tailwind CSS
+---
+
+# Playform
+
+**A powerful, full-stack form builder with real-time analytics, drag-and-drop editing, and rich response management — built as a production-grade monorepo.**
+
+---
+
+## Overview
+
+Playform is a modern form creation and analytics platform that lets users build, publish, and analyze forms from a single, cohesive interface. Inspired by tools like Typeform and Formbricks, it was built from the ground up as a Turborepo monorepo, emphasizing code sharing, scalability, and developer experience.
+
+The platform covers the full lifecycle of a form: creation via a visual drag-and-drop editor, publishing with status control, collecting responses, and analyzing results through a rich summary dashboard.
+
+---
+
+## Features
+
+- **Visual Form Editor** — Drag-and-drop question cards with collapsible panels, live reordering, duplication, and deletion
+- **Multiple Question Types** — Open text, multiple choice (single & multi), date picker, and address fields
+- **Welcome & Thank You Cards** — Configurable onboarding and closing screens per form
+- **Form Styling** — Per-form style overrides for brand color, question color, input color, and border color via a live preview
+- **Live Preview Panel** — Side-by-side desktop preview that reflects changes in real time
+- **Form Status Lifecycle** — Draft → Published → In Progress → Paused → Completed with status dropdown control
+- **Response Collection** — Paginated response list with timeline view, skeleton loading, and empty states
+- **Response Table** — Column-based data table with drag-to-reorder columns, visibility toggles, row expand/collapse, and persistent localStorage settings
+- **Summary Dashboard** — Aggregated stats (impressions, starts, completions, drop-offs) with per-question open-text response samples
+- **Shareable Results** — Publish form results to a public URL or copy a shareable link
+- **Share & Embed Modal** — Anonymous link sharing, website embed via iframe, QR code generation and download
+- **Template Gallery** — Browse and preview form templates before creating
+- **Authentication** — Session-based auth with NextAuth; protected routes throughout
+- **Unsaved Changes Guard** — `beforeunload` event listener + confirmation dialog on navigation away from unsaved edits
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript 5.9 |
+| Monorepo | Turborepo + pnpm workspaces |
+| Styling | Tailwind CSS |
+| Database ORM | Prisma |
+| Auth | NextAuth.js |
+| Forms | React Hook Form + Zod resolvers |
+| Drag & Drop | @dnd-kit/core, @dnd-kit/sortable |
+| Table | TanStack Table (React Table v8) |
+| Rich Text | Custom Editor component (markdown-based) |
+| QR Codes | qr-code-styling |
+| Error Tracking | Sentry (@sentry/nextjs) |
+| UI Components | Custom `@playform/ui` package |
+| Animations | @formkit/auto-animate |
+
+---
+
+## Architecture & Folder Structure
+
+The project is organized as a Turborepo monorepo with shared packages across multiple apps:
+
+```
+playform/
+├── apps/
+│   ├── web/                        # Main Next.js application
+│   │   ├── app/
+│   │   │   ├── (app)/
+│   │   │   │   ├── forms/
+│   │   │   │   │   ├── [formId]/
+│   │   │   │   │   │   ├── (analysis)/
+│   │   │   │   │   │   │   ├── summary/    # Stats + per-question summaries
+│   │   │   │   │   │   │   └── responses/  # Response table + timeline
+│   │   │   │   │   │   └── edit/           # Form editor
+│   │   │   │   │   └── templates/          # Template gallery
+│   │   │   │   └── components/             # Shared layout components
+│   │   │   └── lib/                        # Utility functions
+│   └── docs/                       # Next.js docs app
+├── packages/
+│   ├── ui/                         # Shared React component library
+│   ├── lib/                        # Shared utilities, services, auth
+│   ├── database/                   # Prisma schema + client
+│   ├── types/                      # Shared TypeScript types
+│   ├── api/                        # API layer
+│   ├── forms/                      # Form renderer package
+│   ├── email/                      # Email templates
+│   ├── config-tailwind/            # Shared Tailwind config
+│   └── config-typescript/          # Shared tsconfig
+```
+
+---
+
+## Key Highlights
+
+### Monorepo Architecture
+The entire platform is split across workspace packages (`@playform/ui`, `@playform/lib`, `@playform/types`, `@playform/database`) enabling strict separation of concerns and reuse across apps. Turborepo handles task orchestration and caching.
+
+### Form Editor State Management
+The editor maintains a `localForm` state that diverges from the server-persisted `form` until the user explicitly saves. A deep equality check (`lodash.isEqual`) drives the unsaved-changes warning and disables the Save button when the form is already live.
+
+### Layered Routing with Parallel Layouts
+The `(form-editor)` and `(analysis)` route groups each have their own layouts enforcing session checks, making auth boundaries explicit and composable without prop-drilling.
+
+### Persistent Table Preferences
+The response table saves column order, column visibility, and row expansion state to `localStorage` keyed by form ID — so user preferences survive page reloads.
+
+### Styling Overrides System
+Forms inherit a product-level theme by default. A `overwriteThemeStyling` toggle lets users diverge with form-specific colors. The system stores and restores per-form styling changes as users toggle the override on and off.
+
+---
+
+## Challenges & Solutions
+
+**Challenge:** Managing the form editor's unsaved state across navigations without a global store.
+
+**Solution:** `localForm` is initialized from server props via `structuredClone`, mutated locally, and compared against the original `form` prop using `lodash.isEqual`. An `AlertDialog` intercepts back navigation when changes exist, offering Save or Discard.
+
+---
+
+**Challenge:** The response table needed persistent user preferences (column order, visibility, row expansion) without a backend.
+
+**Solution:** Used `localStorage` with form-ID-scoped keys, initialized on mount via `useEffect`, and synced back on change. Skeleton rows during the first fetch are generated by mapping `Array(10).fill({})` through the same column definitions with stub cell renderers.
+
+---
+
+**Challenge:** Supporting flexible form sharing (anonymous links, embeds, QR codes) within a single modal.
+
+**Solution:** Built a `ShareModal` with a sidebar-driven tab system. Each tab (`AnonymousLinksTab`, `WebsiteEmbedTab`, `QRCodeTab`) is registered as a config object with its component type and props, then rendered dynamically — making it trivial to add new sharing methods.
