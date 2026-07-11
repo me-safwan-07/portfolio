@@ -15,7 +15,14 @@ const getIp = (req: NextRequest) => {
 export async function GET(req: NextRequest) {
   const ip = getIp(req)
 
-  const { success } = await ratelimit.limit(getKey(ip))
+  let success = true
+  try {
+    const result = await ratelimit.limit(getKey(ip))
+    success = result.success
+  } catch (e) {
+    console.warn('Rate limiter failed, bypassing:', e)
+  }
+
   if (!success) {
     return Response.json(
       { error: 'Too many requests' },

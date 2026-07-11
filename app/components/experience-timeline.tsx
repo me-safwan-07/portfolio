@@ -35,17 +35,15 @@ export function Timeline({ items, className }: TimelineProps) {
   return (
     <section 
       className={cn("w-full max-w-4xl mx-auto px-4 sm:px-6 py-8", className)}
-      role="list"
-      aria-label="Timeline of events and milestones"
     >
       <div className="relative">
         <div 
-          className="absolute left-4 sm:left-6 top-0 bottom-0 w-px bg-border" 
+          className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-border" 
           aria-hidden="true"
         />
         
         <motion.div
-          className="absolute left-4 sm:left-6 top-0 w-px bg-primary origin-top"
+          className="absolute left-4 sm:left-8 top-0 w-px bg-primary origin-top"
           initial={{ scaleY: 0 }}
           whileInView={{ 
             scaleY: 1,
@@ -78,8 +76,6 @@ export function Timeline({ items, className }: TimelineProps) {
                   }
                 }}
                 viewport={{ once: true, margin: "-30px" }}
-                role="listitem"
-                aria-label={`Timeline item ${index + 1}: ${item.company}`}
               >
                 <Link href={`/experience/${item.slug}`} className="flex items-start gap-4 sm:gap-6">
                   <div className="relative flex-shrink-0">
@@ -158,7 +154,7 @@ export function Timeline({ items, className }: TimelineProps) {
         </div>
 
         <motion.div
-          className="absolute left-4 sm:left-6 -bottom-6 transform -translate-x-1/2"
+          className="absolute left-4 sm:left-8 -bottom-6 transform -translate-x-1/2"
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{ 
             opacity: 1, 
@@ -178,4 +174,4 @@ export function Timeline({ items, className }: TimelineProps) {
       </div>
     </section>
   )
-} 
+}

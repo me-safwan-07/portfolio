@@ -8,22 +8,24 @@ import { allExperiences } from "@/.content-collections/generated"
 
 
 export function SelectedExperience() {
-  const filteredExperiences = allExperiences.slice(0, 2)
+  const filteredExperiences = allExperiences
+    .toSorted((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+    .slice(0, 2)
   return (
-    <div className="bg-background">
+    <section aria-labelledby="experience-heading" className="bg-background">
       <header className="text-center py-16 px-6">
-        <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+        <h2 id="experience-heading" className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
           Selected Experiences
-        </h1>
+        </h2>
       </header>
 
-      <main>
+      <div className="w-full">
         <Timeline items={filteredExperiences} />
-      </main>
+      </div>
 
       <div className='my-8 flex items-center justify-center'>
         <Link
-          href='/experiences'
+          href='/experience'
           className={cn(
             buttonVariants({ variant: 'outline' }),
             'rounded-xl'
@@ -32,6 +34,6 @@ export function SelectedExperience() {
           See all Experiences
         </Link>
       </div>
-    </div>
+    </section>
   )
 } 

@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic'
-
 import type { Metadata, ResolvingMetadata } from 'next'
 import type { Article, WithContext } from 'schema-dts'
 
@@ -16,6 +14,7 @@ import ProgressBar from './progress-bar'
 import TableOfContents from './table-of-contents'
 import Providers from './providers'
 import MobileTableOfContents from './mobile-table-of-contents'
+import { generateBreadcrumbSchema } from '@/app/lib/seo'
 
 type PageProps = {
   params: Promise<{
@@ -47,7 +46,7 @@ export const generateMetadata = async (
   const previousTwitter = (await parent).twitter ?? {}
   const previousOpenGraph = (await parent).openGraph ?? {}
   const fullSlug = `/blog/${slug}`
-  const url = `${SITE_NAME}+${fullSlug}`;
+  const url = getPath(fullSlug);
 
   return {
     title: title,
@@ -55,8 +54,8 @@ export const generateMetadata = async (
     alternates: {
       canonical: url,
       languages: {
-          'en': getPath(fullSlug),
-        'x-default': getPath(fullSlug)
+          'en': url,
+        'x-default': url
       }
     },
     openGraph: {
@@ -98,7 +97,7 @@ const Page = async (props: PageProps) => {
   const { slug } = await props.params
 
   const post = allPosts.find((p) => p.slug === slug)
-  const url = `${SITE_NAME}+/blog/${slug}`;
+  const url = getPath(`/blog/${slug}`);
 
   if (!post) {
     notFound()
@@ -128,11 +127,21 @@ const Page = async (props: PageProps) => {
     }
   }
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', href: '/' },
+    { name: 'Blog', href: '/blog' },
+    { name: title }
+  ])
+
   return (
     <>
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <Providers post={post}>

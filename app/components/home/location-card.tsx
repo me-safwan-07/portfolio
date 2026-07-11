@@ -1,72 +1,70 @@
 'use client'
 
-import createGlobe from 'cobe'
 import { MapPinIcon } from 'lucide-react'
 import { useEffect, useRef } from 'react'
-import { useSpring } from 'react-spring'
 
 const LocationCard = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const pointerInteracting = useRef<number | null>(null)
   const pointerInteractionMovement = useRef(0)
+  const rotation = useRef(0)
   const fadeMask = 'radial-gradient(circle at 50% 50%, rgb(0, 0, 0) 60%, rgb(0, 0, 0, 0) 70%)'
 
-  const [{ r }, api] = useSpring(() => ({
-    r: 0,
-    config: {
-      mass: 1,
-      tension: 280,
-      friction: 40,
-      precision: 0.001
-    }
-  }))
-
   useEffect(() => {
-    let width = 0
+    const canvas = canvasRef.current
+    if (!canvas) return
 
-    const onResize = () => {
-      if (canvasRef.current && (width = canvasRef.current.offsetWidth)) {
-        window.addEventListener('resize', onResize)
-      }
-    }
-    onResize()
+    let cancelled = false
+    let globe: { destroy: () => void } | undefined
+    let resizeObserver: ResizeObserver | undefined
+    const intersectionObserver = new IntersectionObserver(
+      async ([entry]) => {
+        if (!entry?.isIntersecting) return
 
-    if (!canvasRef.current) return
+        intersectionObserver.disconnect()
+        const { default: createGlobe } = await import('cobe')
+        if (cancelled) return
 
-    const globe = createGlobe(canvasRef.current, {
-  devicePixelRatio: 2,
-  width: width * 2,
-  height: width * 2,
-  phi: 0,  // Longitude for Bengaluru
-  theta: 0, // Latitude for Bengaluru
-  dark: 1,
-  diffuse: 2,
-  mapSamples: 12_000,
-  mapBrightness: 2,
-  baseColor: [0.8, 0.8, 0.8],
-  markerColor: [1, 1, 1],
-  glowColor: [0.5, 0.5, 0.5],
-  markers: [
-    {
-      location: [12.9716, 77.5946], // Bengaluru
-      size: 0.1
-    }
-  ],
-  scale: 1.05,
-  onRender: (state) => {
-    state.phi = 3 + r.get();
-    // state.theta = 0.23;
-    state.width = width * 2;
-    state.height = width * 2;
-  }
-});
+        const pixelRatio = Math.min(window.devicePixelRatio, 1.5)
+        let size = canvas.clientWidth
+        resizeObserver = new ResizeObserver(([resizeEntry]) => {
+          size = resizeEntry?.contentRect.width ?? size
+        })
+        resizeObserver.observe(canvas)
 
+        globe = createGlobe(canvas, {
+          devicePixelRatio: pixelRatio,
+          width: size * pixelRatio,
+          height: size * pixelRatio,
+          phi: 0,
+          theta: 0,
+          dark: 1,
+          diffuse: 2,
+          mapSamples: 4_000,
+          mapBrightness: 2,
+          baseColor: [0.8, 0.8, 0.8],
+          markerColor: [1, 1, 1],
+          glowColor: [0.5, 0.5, 0.5],
+          markers: [{ location: [12.9716, 77.5946], size: 0.1 }],
+          scale: 1.05,
+          onRender: (state) => {
+            state.phi = 3 + rotation.current
+            state.width = size * pixelRatio
+            state.height = size * pixelRatio
+          }
+        })
+      },
+      { rootMargin: '300px' }
+    )
 
+    intersectionObserver.observe(canvas)
     return () => {
-      globe.destroy()
-      window.removeEventListener('resize', onResize)
+      cancelled = true
+      intersectionObserver.disconnect()
+      resizeObserver?.disconnect()
+      globe?.destroy()
     }
-  }, [r])
+  }, [])
 
   return (
     <div className='shadow-feature-card relative flex h-60 flex-col gap-6 overflow-hidden rounded-xl p-4 lg:p-6'>
@@ -112,18 +110,14 @@ const LocationCard = () => {
                 if (pointerInteracting.current !== null) {
                   const delta = e.clientX - pointerInteracting.current
                   pointerInteractionMovement.current = delta
-                  api.start({
-                    r: delta / 200
-                  })
+                  rotation.current = delta / 200
                 }
               }}
               onTouchMove={(e) => {
                 if (pointerInteracting.current !== null && e.touches[0]) {
                   const delta = e.touches[0].clientX - pointerInteracting.current
                   pointerInteractionMovement.current = delta
-                  api.start({
-                    r: delta / 100
-                  })
+                  rotation.current = delta / 100
                 }
               }}
               style={{

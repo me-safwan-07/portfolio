@@ -32,7 +32,8 @@ const LatestArticles = () => {
     .slice(0, 2)
 
   return (
-    <motion.div
+    <motion.section
+      aria-labelledby="articles-heading"
       initial='initial'
       animate={isInView ? 'animate' : 'initial'}
       variants={variants}
@@ -43,6 +44,7 @@ const LatestArticles = () => {
       className='my-24'
     >
       <motion.h2
+        id="articles-heading"
         className='text-center text-3xl font-semibold'
         initial={{
           y: 30,
@@ -89,7 +91,7 @@ const LatestArticles = () => {
           See all articles
         </Link>
       </div>
-    </motion.div>
+    </motion.section>
   )
 }
 
@@ -104,27 +106,29 @@ const Card = (props: CardProps) => {
 
   return (
     <Link href={`/blog/${slug}`} className='shadow-feature-card group relative rounded-xl p-2'>
-      <div className='flex items-center justify-between p-4'>
-        <div className='flex items-center gap-3'>
-          <PencilIcon className='size-[18px]' />
-          <h2>Article</h2>
+      <article className="h-full w-full">
+        <div className='flex items-center justify-between p-4'>
+          <div className='flex items-center gap-3'>
+            <PencilIcon className='size-[18px]' />
+            <span className="font-medium">Article</span>
+          </div>
+          <ArrowUpRightIcon className='size-[18px] opacity-0 transition-opacity group-hover:opacity-100' />
         </div>
-        <ArrowUpRightIcon className='size-[18px] opacity-0 transition-opacity group-hover:opacity-100' />
-      </div>
-      <BlurImage
-        width={1200}
-        height={630}
-        src={`/images/blog/${slug}/cover.png`}
-        alt={title}
-        className='rounded-lg'
-      />
-      <div className='flex items-center justify-between gap-2 px-2 pt-4 text-sm text-zinc-500'>
-        {formattedDate}
-      </div>
-      <div className='flex flex-col px-2 py-4 transition-transform ease-out group-hover:translate-x-0.5'>
-        <h3 className='text-2xl font-semibold'>{title}</h3>
-        <p className='text-muted-foreground mt-2'>{summary}</p>
-      </div>
+        <BlurImage
+          width={1200}
+          height={630}
+          src={`/images/blog/${slug}/cover.png`}
+          alt={title}
+          className='rounded-lg'
+        />
+        <div className='flex items-center justify-between gap-2 px-2 pt-4 text-sm text-foreground'>
+          {formattedDate}
+        </div>
+        <div className='flex flex-col px-2 py-4 transition-transform ease-out group-hover:translate-x-0.5'>
+          <h3 className='text-2xl font-semibold'>{title}</h3>
+          <p className='text-muted-foreground mt-2'>{summary}</p>
+        </div>
+      </article>
     </Link>
   )
 }

@@ -9,9 +9,9 @@ import {
   Briefcase,
   FlameIcon,
   Layers,
-  // MonitorIcon,
   PencilIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  LinkedinIcon
 } from 'lucide-react'
 
 import {
@@ -19,7 +19,8 @@ import {
   SITE_GITHUB_URL,
   SITE_INSTAGRAM_URL,
   SITE_X_URL,
-  SITE_YOUTUBE_URL
+  SITE_YOUTUBE_URL,
+  SITE_LINKEDIN_URL
 } from '../lib/constants';
 
 type SocialLinks = Array<{
@@ -39,16 +40,6 @@ export const HEADER_LINKS = [
     href: '/blog',
     key: 'blog'
   },
-  // {
-  //   icon: <MessageCircleIcon className='size-3.5' />,
-  //   href: '/guestbook',
-  //   key: 'guestbook'
-  // },
-  // {
-  //   icon: <BarChartIcon className='size-3.5' />,
-  //   href: '/dashboard',
-  //   key: 'dashboard'
-  // },
   {
     icon: <FlameIcon className='size-3.5' />,
     href: '/projects',
@@ -63,12 +54,7 @@ export const HEADER_LINKS = [
     icon: <Layers className='size-3.5' />,
     href: '/stacks',
     key: 'stacks'
-  },
-  // {
-  //   icon: <MonitorIcon className='size-3.5' />,
-  //   href: '/uses',
-  //   key: 'uses'
-  // }
+  }
 ] as const
 
 export const FOOTER_LINKS = [
@@ -77,8 +63,7 @@ export const FOOTER_LINKS = [
     links: [
       { href: '/', key: 'Home' },
       { href: '/blog', key: 'Blog' },
-      { href: '/about', key: 'About' },
-      // { href: '/dashboard', key: 'dashboard' }
+      { href: '/about', key: 'About' }
     ]
   },
   {
@@ -87,7 +72,7 @@ export const FOOTER_LINKS = [
       { href: '/experience', key: 'Experience' },
       { href: '/stacks', key: 'Stacks' },
       { href: '/projects', key: 'Projects' },
-      { href: 'https://links.nelsonlai.me', key: 'Links' }
+      { href: SITE_LINKEDIN_URL, key: 'LinkedIn' }
     ]
   },
   {
@@ -107,11 +92,11 @@ export const SOCIAL_LINKS: SocialLinks = [
     title: 'GitHub',
     icon: SiGithub
   },
-  // {
-  //   href: SITE_FACEBOOK_URL,
-  //   title: 'Facebook',
-  //   icon: SiFacebook
-  // },
+  {
+    href: SITE_LINKEDIN_URL,
+    title: 'LinkedIn',
+    icon: LinkedinIcon as IconType
+  },
   {
     href: SITE_INSTAGRAM_URL,
     title: 'Instagram',

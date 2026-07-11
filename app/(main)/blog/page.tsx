@@ -6,6 +6,7 @@ import { SITE_NAME, SITE_URL } from '@/app/lib/constants'
 import PageTitle from '@/app/components/page-title'
 import FilteredPosts from '@/app/components/filtered-posts'
 import { getPath } from '@/app/utils/get-path'
+import { generateBreadcrumbSchema } from '@/app/lib/seo'
 
 
 export const generateMetadata = async (
@@ -14,7 +15,7 @@ export const generateMetadata = async (
   const previousOpenGraph = (await parent).openGraph ?? {}
   const previousTwitter = (await parent).twitter ?? {}
   const title = 'Blog'
-  const description = 'My personal website and blog where I share my thoughts on various topics including tutorials, notes, and personal experiences. As a full-stack engineer from Hong Kong, I started learning web development as a hobby in December 2020. I use Next.js for building websites, GitHub for code hosting, and Vercel for deployment. Explore my site to learn more about my Journey and discover some of the web development resources that have inspired me.'
+  const description = 'Explore articles and tutorials by Muhammed Safwan on web development, React, Next.js, TypeScript, and full stack engineering. Insights from a developer based in Bangalore, India.'
   const slug = '/blog'
   const url = getPath(slug);
 
@@ -44,8 +45,8 @@ export const generateMetadata = async (
 
 const Page = async () => {
   const title = "Blog"
-  const description = "My personal website and blog where I share my thoughts on various topics including tutorials, notes, and personal experiences. As a full-stack engineer from Hong Kong, I started learning web development as a hobby in December 2020. I use Next.js for building websites, GitHub for code hosting, and Vercel for deployment. Explore my site to learn more about my Journey and discover some of the web development resources that have inspired me."
-  const url = `${SITE_URL}+/blog`;
+  const description = "Explore articles and tutorials by Muhammed Safwan on web development, React, Next.js, TypeScript, and full stack engineering. Insights from a developer based in Bangalore, India."
+  const url = getPath('/blog');
 
   const posts = allPosts
     .toSorted((a, b) => {
@@ -73,11 +74,20 @@ const Page = async () => {
     }))
   }
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', href: '/' },
+    { name: 'Blog' }
+  ])
+
   return (
     <>
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <PageTitle title={title} description={description} />
       <FilteredPosts posts={posts} />

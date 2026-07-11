@@ -4,16 +4,20 @@ import "./globals.css";
 import { cn } from "@/packages/utils/cn";
 import Providers from "./providers";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import { SITE_KEYWORDS, SITE_NAME, SITE_URL } from "./lib/constants";
+import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_TITLE, SITE_URL } from "./lib/constants";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      default: "Muhammed Safwan - A Full Stack Developer",
-      template: `%s | Muhammed Safwan - A Full Stack Developer`
+      default: SITE_TITLE,
+      template: `%s | Muhammed Safwan — Full Stack Developer`
     },
-    description: "Muhammed Safwan • 20 y/o • Student • Full Stack Developer",
+    description: SITE_DESCRIPTION,
+    alternates: {
+      canonical: SITE_URL
+    },
+    category: 'technology',
     robots: {
       index: true,
       follow: true,
@@ -28,36 +32,34 @@ export const generateMetadata = async (): Promise<Metadata> => {
     manifest: '/favicon/site.webmanifest',
     twitter: {
       card: 'summary_large_image',
-      title: SITE_NAME,
-      description: 'Muhammed Safwan • 20 y/o • Student • Full Stack Developer',
+      title: SITE_TITLE,
+      description: SITE_DESCRIPTION,
       site: "@me_safwan_07",
-      siteId: "1748175560541675520",
       creator: "@me_safwan_07",
-      creatorId: "1748175560541675520",
       images: [
         {
           url: '/images/og.png',
           width: 1200,
           height: 630,
-          alt: "Muhammed Safwan • 20 y/o • Student • Full Stack Developer",
+          alt: "Muhammed Safwan — Full Stack Developer",
         }
       ]
     },
     keywords: SITE_KEYWORDS,
-    creator: 'me_safwan_07',
+    creator: 'Muhammed Safwan',
     openGraph: {
       url: SITE_URL,
       type: 'website',
-      title: 'Muhammed Safwan - A Full Stack Developer',
-      siteName: "Muhammed Safwan - A Full Stack Developer",
-      description: "Muhammed Safwan • 20 y/o • Student • Full Stack Developer",
+      title: SITE_TITLE,
+      siteName: "Muhammed Safwan Portfolio",
+      description: SITE_DESCRIPTION,
       locale: "en",
       images: [
         {
           url: "/images/og.png",
           width: 1200,
           height: 630,
-          alt: "Muhammed Safwan • 20 y/o • Student • Full Stack Developer",
+          alt: "Muhammed Safwan — Full Stack Developer",
           type: 'image/png'
         }
       ]

@@ -1,5 +1,5 @@
 import type { Metadata, ResolvingMetadata } from 'next'
-import type { SoftwareApplication, WithContext } from 'schema-dts'
+import type { Article, WithContext } from 'schema-dts'
 
 import { allExperiences } from 'content-collections'
 import { notFound } from 'next/navigation'
@@ -8,6 +8,7 @@ import Header from './header'
 import Mdx from '@/app/components/mdx/mdx'
 import { getPath } from '@/app/utils/get-path'
 import { SITE_NAME, SITE_URL } from '@/app/lib/constants'
+import { generateBreadcrumbSchema } from '@/app/lib/seo'
 
 type PageProps = {
   params: Promise<{
@@ -36,7 +37,7 @@ export const generateMetadata = async (
   const { company, description } = experience
   const previousTwitter = (await parent).twitter ?? {}
   const previousOpenGraph = (await parent).openGraph ?? {}
-  const fullSlug = `/projects/${slug}`
+  const fullSlug = `/experience/${slug}`
   const url = getPath(fullSlug);
 
   return {
@@ -52,7 +53,7 @@ export const generateMetadata = async (
       description: description,
       images: [
         {
-          url: `/images/projects/${slug}/cover.png`,
+          url: `/images/experience/${slug}/cover.png`,
           width: 1280,
           height: 832,
           alt: description,
@@ -66,7 +67,7 @@ export const generateMetadata = async (
       description: description,
       images: [
         {
-          url: `/images/projects/${slug}/cover.png`,
+          url: `/images/experience/${slug}/cover.png`,
           width: 1280,
           height: 832,
           alt: description
@@ -91,7 +92,7 @@ const Page = async (props: PageProps) => {
   const { slug } = await props.params;
 
   const experience = allExperiences.find((p) => p.slug === slug)
-  const url = getPath(slug)
+  const url = getPath(`/experience/${slug}`)
 
   if (!experience) {
     notFound()
@@ -99,21 +100,25 @@ const Page = async (props: PageProps) => {
 
   const { company, code, description } = experience
 
-  const jsonLd: WithContext<SoftwareApplication> = {
+  const jsonLd: WithContext<Article> = {
     '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: company,
+    '@type': 'Article',
+    headline: company,
     description,
     url,
-    applicationCategory: 'WebApplication',
     author: {
       '@type': 'Person',
       name: SITE_NAME,
       url: SITE_URL
     },
-    // sameAs: [github],
-    screenshot: `${SITE_URL}/images/experience/${slug}/cover.png`
+    image: `${SITE_URL}/images/experience/${slug}/cover.png`
   }
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', href: '/' },
+    { name: 'Experience', href: '/experience' },
+    { name: company }
+  ])
 
   return (
     <>
@@ -121,10 +126,14 @@ const Page = async (props: PageProps) => {
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className='mx-auto max-w-3xl'>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <article className='mx-auto max-w-3xl'>
         <Header {...experience} />
         <Mdx code={code} />
-      </div>
+      </article>
     </>
   )
 }

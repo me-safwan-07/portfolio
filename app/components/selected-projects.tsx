@@ -30,7 +30,8 @@ const SelectedProjects = () => {
   const filteredProjects = allProjects.slice(0, 2)
 
   return (
-    <motion.div
+    <motion.section
+      aria-labelledby="projects-heading"
       initial='initial'
       animate={isInView ? 'animate' : 'initial'}
       variants={variants}
@@ -41,6 +42,7 @@ const SelectedProjects = () => {
       className='relative my-24'
     >
       <motion.h2
+        id="projects-heading"
         className='text-center text-3xl font-semibold'
         initial={{
           y: 30,
@@ -85,7 +87,7 @@ const SelectedProjects = () => {
           See all Project
         </Link>
       </div>
-    </motion.div>
+    </motion.section>
   )
 }
 
@@ -99,24 +101,26 @@ const Card = (props: CardProps) => {
       href={`/projects/${slug}`}
       className='shadow-feature-card group relative rounded-xl p-2'
     >
-      <div className='flex items-center justify-between p-4'>
-        <div className='flex items-center gap-3'>
-          <LightbulbIcon className='size-[18px]' />
-          <h2>{"Project"}</h2>
+      <article className="h-full w-full">
+        <div className='flex items-center justify-between p-4'>
+          <div className='flex items-center gap-3'>
+            <LightbulbIcon className='size-[18px]' />
+            <span className="font-medium">{"Project"}</span>
+          </div>
+          <ArrowUpRightIcon className='size-[18px] opacity-0 transition-opacity group-hover:opacity-100' />
         </div>
-        <ArrowUpRightIcon className='size-[18px] opacity-0 transition-opacity group-hover:opacity-100' />
-      </div>
-      <BlurImage
-        width={1280}
-        height={832}
-        src={`/images/projects/${slug}/cover.png`}
-        alt={description}
-        className='rounded-lg'
-      />
-      <div className='absolute bottom-6 left-7 flex flex-col transition-[left] ease-out group-hover:left-[30px]'>
-        <h3 className='text-2xl font-semibold text-white'>{name}</h3>
-        <p className='dark:text-muted-foreground mt-2 text-zinc-100'>{description}</p>
-      </div>
+        <BlurImage
+          width={1280}
+          height={832}
+          src={`/images/projects/${slug}/cover.png`}
+          alt={description}
+          className='rounded-lg'
+        />
+        <div className='absolute bottom-6 left-7 flex flex-col transition-[left] ease-out group-hover:left-[30px]'>
+          <h3 className='text-2xl font-semibold text-white'>{name}</h3>
+          <p className='dark:text-muted-foreground mt-2 text-zinc-100'>{description}</p>
+        </div>
+      </article>
     </Link>
   )
 }

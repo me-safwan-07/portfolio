@@ -13,12 +13,14 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 const config: NextConfig = {
   experimental: {
-    optimizePackageImports: ['shiki']
+    optimizePackageImports: ['shiki', 'lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-tooltip', '@radix-ui/react-popover', 'motion', 'cobe']
   },
 
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
+  compress: true,
 
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',

@@ -6,17 +6,18 @@ import { notFound } from 'next/navigation'
 import { SITE_NAME, SITE_URL } from '@/app/lib/constants'
 import PageTitle from '@/app/components/page-title'
 import Mdx from '@/app/components/mdx/mdx'
+import { getPath } from '@/app/utils/get-path'
+import { generateBreadcrumbSchema } from '@/app/lib/seo'
 
 export const generateMetadata = async (
   parent: ResolvingMetadata
 ): Promise<Metadata> => {
   const previousOpenGraph = (await parent).openGraph ?? {}
   const previousTwitter = (await parent).twitter ?? {}
-  const title = "Uses"
-  const description = "This is the equipment I currently use for gaming, programming, making videos, and every day."
+  const title = "Tech Stack"
+  const description = "The technologies, frameworks, and tools that Muhammed Safwan uses for full stack web development including React, Next.js, TypeScript, and more."
 
-  const slug = '/uses'
-  const url = `${SITE_NAME}${slug}`;
+  const url = getPath('/stacks');
 
   return {
     title,
@@ -39,9 +40,9 @@ export const generateMetadata = async (
 }
 
 const Page = async () => {
-  const title = "Stacks"
-  const description = "This is the equipment I currently use for gaming, programming, making videos, and every day."
-  const url = `${SITE_NAME}/stacks`
+  const title = "Tech Stack"
+  const description = "The technologies, frameworks, and tools that Muhammed Safwan uses for full stack web development including React, Next.js, TypeScript, and more."
+  const url = getPath('/stacks')
   const page = allPages.find((p) => p.slug === 'stacks')
 
   const jsonLd: WithContext<WebPage> = {
@@ -52,10 +53,15 @@ const Page = async () => {
     url,
     isPartOf: {
       '@type': 'WebSite',
-      name: 'Muhammed Safwan - A Full Stack Developer',
+      name: SITE_NAME,
       url: SITE_URL
     }
   }
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', href: '/' },
+    { name: 'Tech Stack' }
+  ])
 
   if (!page) {
     return notFound()
@@ -68,6 +74,10 @@ const Page = async () => {
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <PageTitle title={title} description={description} />
       <Mdx code={code} />

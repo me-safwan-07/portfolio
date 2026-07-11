@@ -46,7 +46,8 @@ const GetInTouch = () => {
   }, [animate])
 
   return (
-    <motion.div
+    <motion.section
+      aria-labelledby="contact-heading"
       className='shadow-feature-card relative rounded-xl p-1 backdrop-blur-lg'
       initial='initial'
       animate={isInView ? 'animate' : 'initial'}
@@ -116,11 +117,11 @@ const GetInTouch = () => {
           </div>
 
           <div className='flex flex-col justify-center px-4'>
-            <p className='bg-linear-to-r mb-2 from-black to-black/70 bg-clip-text text-3xl font-semibold text-transparent dark:from-zinc-100 dark:to-zinc-400'>
-              Any questions about Next.js?
-            </p>
+            <h2 id="contact-heading" className='bg-linear-to-r mb-2 from-black to-black/70 bg-clip-text text-3xl font-semibold text-transparent dark:from-zinc-100 dark:to-zinc-400'>
+              Let's Work Together
+            </h2>
             <p className='text-zinc-800 dark:text-zinc-300'>
-              Feel free to reach out to me!
+              Have a project in mind? I'm available for freelance work and collaborations. Let's build something great.
             </p>
             <div className='my-8'>
               <a
@@ -133,7 +134,7 @@ const GetInTouch = () => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </motion.section>
   )
 }
 

@@ -77,6 +77,18 @@ const experience = defineCollection({
   transform
 })
 
+const services = defineCollection({
+  name: 'Service',
+  directory: 'content/services',
+  include: '**/*.mdx',
+  schema: z.object({
+    name: z.string(),
+    description: z.string(),
+    icon: z.string()
+  }),
+  transform
+})
+
 export default defineConfig({
-  collections: [posts, projects, pages, experience]
+  collections: [posts, projects, pages, experience, services]
 })

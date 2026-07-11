@@ -9,6 +9,7 @@ import { BlurImage } from '@/app/components/ui/blur-image'
 import Mdx from '@/app/components/mdx/mdx'
 import { getPath } from '@/app/utils/get-path'
 import { SITE_NAME, SITE_URL } from '@/app/lib/constants'
+import { generateBreadcrumbSchema } from '@/app/lib/seo'
 
 type PageProps = {
   params: Promise<{
@@ -81,7 +82,7 @@ const Page = async (props: PageProps) => {
   const { slug } = await props.params;
 
   const project = allProjects.find((p) => p.slug === slug)
-  const url = getPath(slug)
+  const url = getPath(`/projects/${slug}`)
 
   if (!project) {
     notFound()
@@ -105,13 +106,23 @@ const Page = async (props: PageProps) => {
     screenshot: `${SITE_URL}/images/projects/${slug}/cover.png`
   }
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', href: '/' },
+    { name: 'Projects', href: '/projects' },
+    { name: name }
+  ])
+
   return (
     <>
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className='mx-auto max-w-3xl'>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <article className='mx-auto max-w-3xl'>
         <Header {...project} />
         <BlurImage
           src={`/images/projects/${slug}/cover.png`}
@@ -122,7 +133,7 @@ const Page = async (props: PageProps) => {
           lazy={false}
         />
         <Mdx code={code} />
-      </div>
+      </article>
     </>
   )
 }

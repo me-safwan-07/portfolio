@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'motion/react'
+
 import { useEffect, useState } from 'react'
 import MobileNav from './mobile-nav'
 import Navbar from './navbar'
@@ -29,20 +29,12 @@ const Header = () => {
   }, [])
 
   return (
-    <motion.header
+    <header
+      role="banner"
       className={cn(
         'bg-background/30 shadow-xs fixed inset-x-0 top-4 z-40 mx-auto flex h-[60px] max-w-5xl items-center justify-between rounded-2xl px-8 saturate-100 backdrop-blur-[10px] transition-colors',
         isScrolled && 'bg-background/80'
       )}
-      initial={{
-        y: -100
-      }}
-      animate={{
-        y: 0
-      }}
-      transition={{
-        duration: 0.3
-      }}
     >
       <Link
         href='#skip-nav'
@@ -64,7 +56,7 @@ const Header = () => {
         <CommandMenu />
         <MobileNav />
       </div>
-    </motion.header>
+    </header>
   )
 }
 

@@ -11,7 +11,7 @@ const Navbar = () => {
   const pathname = usePathname()
 
   return (
-    <nav className='hidden md:block'>
+    <nav className='hidden md:block' aria-label="Primary navigation">
       <ul className='flex gap-2'>
         {HEADER_LINKS.map((link) => {
           const isActive = link.href === pathname
@@ -24,6 +24,7 @@ const Navbar = () => {
                   'text-foreground': isActive
                 })}
                 href={link.href}
+                aria-current={isActive ? 'page' : undefined}
               >
                 {link.key.charAt(0).toUpperCase() + link.key.slice(1)}
               </Link>

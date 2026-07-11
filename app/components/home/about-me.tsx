@@ -30,7 +30,8 @@ const AboutMe = () => {
   const isInView = useInView(cardsRef, { once: true, margin: '-100px' })
 
   return (
-    <motion.div
+    <motion.section
+      aria-labelledby="about-heading"
       initial='initial'
       animate={isInView ? 'animate' : 'initial'}
       variants={variants}
@@ -41,6 +42,7 @@ const AboutMe = () => {
       className='relative my-24'
     >
       <motion.h2
+        id="about-heading"
         className='text-center text-3xl font-semibold'
         initial={{
           y: 30,
@@ -87,7 +89,7 @@ const AboutMe = () => {
           Know more about me
         </Link>
       </div>
-    </motion.div>
+    </motion.section>
   )
 }
 
