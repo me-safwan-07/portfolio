@@ -30,11 +30,17 @@ export async function GET(req: NextRequest) {
     )
   }
 
+  const wakatimeApiKey = env.WAKATIME_API_KEY?.trim()
+
+  if (!wakatimeApiKey) {
+    return Response.json({ error: 'Wakatime API key is not configured' }, { status: 500 })
+  }
+
   const res = await fetch(
     'https://wakatime.com/api/v1/users/current/all_time_since_today',
     {
       headers: {
-        Authorization: `Basic ${Buffer.from(env.WAKATIME_API_KEY).toString('base64')}`
+        Authorization: `Basic ${Buffer.from(wakatimeApiKey).toString('base64')}`
       }
     }
   )

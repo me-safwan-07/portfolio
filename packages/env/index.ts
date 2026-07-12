@@ -11,10 +11,10 @@ export const env = createEnv({
   },
   
   server: {
-    WAKATIME_API_KEY: z.string().min(1),
-    IP_ADDRESS_SALT: z.string().min(1),
-    UPSTASH_REDIS_REST_URL: z.string().url(),
-    UPSTASH_REDIS_REST_TOKEN: z.string().min(1)
+    WAKATIME_API_KEY: z.string().optional(),
+    IP_ADDRESS_SALT: z.string().optional(),
+    UPSTASH_REDIS_REST_URL: z.string().url().optional(),
+    UPSTASH_REDIS_REST_TOKEN: z.string().optional()
   },
   experimental__runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
